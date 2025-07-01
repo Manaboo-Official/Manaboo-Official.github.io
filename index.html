@@ -1,9 +1,258 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- [Previous head content remains exactly the same] -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0" />
+    <meta name="theme-color" content="#DE7D7A">
+    <title>Manaboo - Learn Practical Japanese Phrases</title>
     <style>
-        /* [All previous CSS remains the same until .modal-content] */
+        :root {
+            --primary: #DE7D7A;
+            --primary-dark: #C96464;
+            --primary-light: #f8d7d6;
+            --bg: #F4F0E8;
+            --card-bg: #FFFFFF;
+            --text: #3e3e3e;
+            --text-light: #666666;
+            --border: #E9CBA7;
+            --shadow: 0 4px 12px rgba(0,0,0,0.08);
+            --modal-bg: rgba(0,0,0,0.8);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --safe-area: env(safe-area-inset-top, 0px);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            background-color: var(--bg);
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+        
+        @supports (font-variation-settings: normal) {
+            body { font-family: 'Inter var', -apple-system, BlinkMacSystemFont, sans-serif; }
+        }
+        
+        header {
+            text-align: center;
+            padding: calc(20px + var(--safe-area)) 0 20px;
+            background-color: var(--bg);
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .logo-img {
+            height: 60px;
+            width: auto;
+            max-width: 100%;
+            filter: drop-shadow(0 2px 4px rgba(222, 125, 122, 0.2));
+        }
+        
+        h1 {
+            color: var(--primary);
+            margin: 0;
+            font-size: clamp(1.8rem, 5vw, 2.2rem);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        
+        .tagline {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--text-light);
+            margin: 0.5rem auto 1rem;
+            max-width: 30rem;
+            line-height: 1.5;
+            padding: 0 1rem;
+        }
+        
+        .subscribe {
+            margin: 1rem auto;
+            text-align: center;
+            max-width: 500px;
+            padding: 0 1rem;
+        }
+        
+        .subscribe-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.75rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 2rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            box-shadow: 0 2px 8px rgba(222, 125, 122, 0.3);
+            cursor: pointer;
+            width: 100%;
+            max-width: 20rem;
+        }
+        
+        .subscribe-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(222, 125, 122, 0.4);
+        }
+        
+        .subscribe-btn:active {
+            transform: translateY(0);
+        }
+        
+        .section-title {
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+            margin: 1.5rem auto 1rem;
+            text-align: center;
+            width: 90%;
+            position: relative;
+            font-weight: 650;
+            color: var(--text);
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 4rem;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            margin: 0.75rem auto 0;
+            border-radius: 2px;
+        }
+        
+        .newsletter-list {
+            width: 90%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem 1rem;
+            background-color: var(--bg);
+        }
+        
+        .newsletter-item {
+            background-color: var(--card-bg);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .newsletter-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary);
+        }
+        
+        .newsletter-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .newsletter-item .content {
+            width: calc(100% - 120px);
+            padding-right: 1rem;
+        }
+        
+        .newsletter-item .date {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 0.25rem;
+            font-weight: 500;
+        }
+        
+        .newsletter-item .title {
+            font-weight: 700;
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            margin: 0.25rem 0 0.5rem;
+            color: var(--primary);
+            line-height: 1.3;
+        }
+        
+        .newsletter-item .desc {
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+        
+        .newsletter-item .action {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 110px;
+        }
+        
+        .newsletter-item a {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            padding: 0.7rem 1.25rem;
+            border-radius: var(--radius-sm);
+            background-color: rgba(222, 125, 122, 0.1);
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            border: 1px solid rgba(222, 125, 122, 0.2);
+            text-align: center;
+            white-space: nowrap;
+        }
+        
+        .newsletter-item a:hover {
+            background-color: rgba(222, 125, 122, 0.2);
+            border-color: rgba(222, 125, 122, 0.3);
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--modal-bg);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
         
         .modal-content {
             background-color: var(--card-bg);
@@ -12,7 +261,7 @@
             max-width: 40rem;
             max-height: 90vh;
             overflow-y: auto;
-            -webkit-overflow-scrolling: touch; /* Added for iOS smooth scrolling */
+            -webkit-overflow-scrolling: touch;
             padding: 2.5rem 2rem 2rem;
             position: relative;
             animation: modalFadeIn 0.3s ease;
@@ -20,18 +269,491 @@
             margin: var(--safe-area) 0;
         }
         
-        /* [Rest of your existing CSS remains exactly the same] */
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: none;
+            border: none;
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .close-modal:hover {
+            color: var(--primary);
+            background-color: rgba(222, 125, 122, 0.1);
+        }
+        
+        .newsletter-content {
+            padding: 0.5rem 0;
+        }
+        
+        .newsletter-content h2 {
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+            font-weight: 700;
+        }
+        
+        .newsletter-date {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+        
+        .newsletter-content h3 {
+            margin: 1.5rem 0 0.75rem;
+            color: var(--text);
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            font-weight: 650;
+        }
+        
+        .newsletter-content p {
+            margin-bottom: 1rem;
+            font-size: clamp(1rem, 2vw, 1.1rem);
+            line-height: 1.6;
+            color: var(--text);
+        }
+        
+        .newsletter-content em {
+            color: var(--text-light);
+            display: block;
+            margin-bottom: 1.5rem;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            font-style: italic;
+        }
+
+        /* Modal content styles */
+        .tone-indicator {
+            background-color: rgba(233, 203, 167, 0.2);
+            border-radius: var(--radius-sm);
+            padding: 0.75rem 1rem;
+            margin: 1rem 0;
+        }
+
+        .tone-indicator h3 {
+            margin-bottom: 0.75rem;
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+        }
+
+        .tone-indicator p {
+            margin: 0.5rem 0;
+            position: relative;
+            line-height: 1.4;
+        }
+
+        .tone-indicator span {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .pronunciation-table {
+            width: 100%;
+            max-width: 400px;
+            margin: 1.5rem auto;
+            border-collapse: collapse;
+        }
+
+        .pronunciation-table td {
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .pronunciation-table tr td:first-child {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .pronunciation-note {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+
+        .listen-btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white !important;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            font-weight: 700;
+            margin: 1.5rem 0;
+            font-size: 1rem;
+            border: 2px solid white;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .listen-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(222, 125, 122, 0.3);
+        }
+
+        .modal-image {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 1.5rem auto;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow);
+        }
+        
+        /* Email-style footer */
+        .email-footer {
+            width: 100%;
+            background-color: var(--bg);
+            padding: 20px 0;
+        }
+
+        html.modal-open,
+        body.modal-open {
+            overflow: hidden;
+            position: relative;
+            height: 100%;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: calc(20px + var(--safe-area)) 0 20px;
+            }
+            
+            .logo-img {
+                height: 50px;
+            }
+            
+            .newsletter-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .newsletter-item .content {
+                width: 100%;
+                padding-right: 0;
+                margin-bottom: 1rem;
+            }
+            
+            .newsletter-item .action {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            
+            .modal-content {
+                padding: 2rem 1.5rem;
+                max-height: 85vh;
+            }
+
+            .pronunciation-table {
+                max-width: 100%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .subscribe-btn {
+                padding: 0.7rem 1.5rem;
+                font-size: 0.9rem;
+            }
+            
+            .newsletter-content h2 {
+                font-size: 1.5rem;
+            }
+            
+            .modal-content {
+                padding: 1.75rem 1.25rem;
+                max-height: 80vh;
+            }
+
+            .listen-btn {
+                padding: 0.7rem 1.25rem;
+                font-size: 0.95rem;
+            }
+        }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://share1.cloudhq-mkt3.net/10cacf323842e2.jpeg">
 </head>
 <body>
-    <!-- [All your existing HTML content remains exactly the same until the script] -->
+    <header>
+        <div class="logo-container">
+            <img class="logo-img" src="https://share1.cloudhq-mkt3.net/10cacf323842e2.jpeg" alt="Manaboo Logo" width="60" height="60">
+            <h1>MANABOO</h1>
+        </div>
+        <p class="tagline">Learn practical Japanese phrases you'll actually use in daily conversation</p>
+        <div class="subscribe">
+            <a href="https://forms.gle/T7njBRXduzbMMkEs7" class="subscribe-btn" target="_blank" rel="noopener">
+                Get Weekly Phrases
+            </a>
+        </div>
+    </header>
+    
+    <main>
+        <h2 class="section-title">Latest Japanese Phrases</h2>
+        <div class="newsletter-list">
+            <div class="newsletter-item">
+                <div class="content">
+                    <div class="date">June 24, 2025</div>
+                    <div class="title">いただきます (itadakimasu)</div>
+                    <div class="desc">"I humbly receive." — A short, polite phrase said right before you start eating or drinking to show gratitude for the food, the people who prepared it, and the life that was taken to provide it.</div>
+                </div>
+                <div class="action">
+                    <a href="#" class="view-btn" data-id="4">View Details</a>
+                </div>
+            </div>
+            
+            <div class="newsletter-item">
+                <div class="content">
+                    <div class="date">June 17, 2025</div>
+                    <div class="title">マジで (Maji de)</div>
+                    <div class="desc">"Seriously?" or "No way!" — A casual expression of surprise or disbelief.</div>
+                </div>
+                <div class="action">
+                    <a href="#" class="view-btn" data-id="1">View Details</a>
+                </div>
+            </div>
+            
+            <div class="newsletter-item">
+                <div class="content">
+                    <div class="date">June 10, 2025</div>
+                    <div class="title">すまん (SUMAN)</div>
+                    <div class="desc">Casual way of saying "My bad/ I am sorry". Less polite expression than すみません (sumimasen)</div>
+                </div>
+                <div class="action">
+                    <a href="#" class="view-btn" data-id="2">View Details</a>
+                </div>
+            </div>
+            
+            <div class="newsletter-item">
+                <div class="content">
+                    <div class="date">June 5, 2025</div>
+                    <div class="title">なんでやねん (nandeya nen)</div>
+                    <div class="desc">A casual and humorous way to say 'What the heck!?' or 'Are you serious!?'</div>
+                </div>
+                <div class="action">
+                    <a href="#" class="view-btn" data-id="3">View Details</a>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div class="email-footer">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" bgcolor="#F4F0E8">
+          <tbody>
+            <tr>
+              <td style="padding: 20px 20px 10px 20px;" align="center">
+                <table class="email-container" width="100%" cellspacing="0" cellpadding="0">
+                  <tbody>
+                    <tr>
+                      <td style="text-align: center; font-family: 'Inter', Arial, sans-serif;">
+                        <table style="width: 100%; max-width: 600px; margin: 0 auto; padding-top: 10px;" role="presentation">
+                          <tbody>
+                            <tr>
+                              <td class="footer-content" style="font-family: 'Inter', Arial, sans-serif; font-size: 14px; color: #666666; line-height: 1.6;" align="center">
+                                <p style="margin: 0;">Manaboo skips the textbook fluff and dives straight into the Japanese words and phrases you'll actually use every day.
+                                  <br>
+                                  <br>
+                                  <span style="font-style: italic; color: #999999;">(Bonus: "Manaboo" comes from 
+                                    <em>manabu</em>—"to learn"—so it literally means "let's learn!")
+                                  </span>
+                                </p>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table> 
+                        <p style="margin: 10px 0 0; color: #3e3e3e; font-size: 12px; line-height: 1.5;">© 2025 Manaboo Japanese Language Learning 
+                          <br>All rights reserved.
+                        </p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+    
+    <div id="newsletter-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" aria-label="Close modal">&times;</button>
+            <div class="newsletter-content" id="modal-content-display">
+            </div>
+        </div>
+    </div>
 
     <script>
-        // Newsletter data (keep your existing newsletters object exactly the same)
-        
-        // DOM elements (keep your existing selectors exactly the same)
+        const newsletters = {
+            1: {
+                title: "マジで (Maji de)",
+                date: "June 17, 2025",
+                content: `
+                    <em>Pronunciation: MAH-jee-deh</em>
+                    <h3>Meaning</h3>
+                    <p>"Seriously?" or "No way!" — A casual expression of surprise or disbelief, similar to "Really?" in English.</p>
+                    
+                    <div class="tone-indicator">
+                        <h3>Tone</h3>
+                        <p>Professional —————— <span>O</span>— Casual</p>
+                        <p>Cutesy ————— <span>O</span>—— Gorilla</p>
+                    </div>
+                    
+                    <h3>Example</h3>
+                    <p>You go to your favorite Sushi restaurant feeling like you want some Uni. The price is listed as "MP", usually meaning market price. You ask the waitress what the price of 1 piece of Uni is. The waitress says "It's $100".</p>
+                    <p>In shock you say: <strong>"MAJIDE?!??!!?"</strong></p>
+                    <img src="https://share1.cloudhq-mkt3.net/2748f265123ab8.jpeg" alt="Friends on bullet train" class="modal-image">
+                    
+                    <h3>Pronunciation Breakdown:</h3>
+                    <table class="pronunciation-table">
+                        <tr>
+                            <td>マ</td>
+                            <td>Mah</td>
+                            <td>Like "ma" in "mama"</td>
+                        </tr>
+                        <tr>
+                            <td>ジ</td>
+                            <td>Jee</td>
+                            <td>Like "Je" in "Jesus"</td>
+                        </tr>
+                        <tr>
+                            <td>で</td>
+                            <td>Deh</td>
+                            <td>Like "de" in "desk"</td>
+                        </tr>
+                    </table>
+                    <p class="pronunciation-note">Note: Often pronounced quickly as "majide?" with emphasis on 'ma'</p>
+                `
+            },
+            2: {
+                title: "すまん (SUMAN)",
+                date: "June 10, 2025",
+                content: `
+                    <em>Pronunciation: SOO-mahn</em>
+                    <h3>Meaning</h3>
+                    <p>Casual way of saying "My bad/I am sorry". Less polite than すみません (sumimasen).</p>
+                    
+                    <h3>Example</h3>
+                    <p>Imagine you're taking a bullet train to Kyoto and sitting next to your friend who is taking a nap. You accidentally poke his side stomach with your strong zero and wake him up.</p>
+                    <p>You say: <strong>"SUMAN！" ("Oh, sorry! lol")</strong></p>
+                    <img src="https://share1.cloudhq-mkt3.net/1765d352a5b76d.png" alt="Friends on bullet train" class="modal-image">
+                    
+                    <h3>Pronunciation Breakdown:</h3>
+                    <table class="pronunciation-table">
+                        <tr>
+                            <td>す</td>
+                            <td>su</td>
+                            <td>Like "sue" but shorter</td>
+                        </tr>
+                        <tr>
+                            <td>ま</td>
+                            <td>ma</td>
+                            <td>Like "ma" in "mama"</td>
+                        </tr>
+                        <tr>
+                            <td>ん</td>
+                            <td>n</td>
+                            <td>Nasal "n" sound</td>
+                        </tr>
+                    </table>
+                    <p class="pronunciation-note">Note: The "u" in "su" is often barely pronounced</p>
+                `
+            },
+            3: {
+                title: "なんでやねん (nandeya nen)",
+                date: "June 5, 2025",
+                content: `
+                    <em>Pronunciation: NAN-deh-ya-NEN</em>
+                    <h3>Meaning</h3>
+                    <p>A casual and humorous way to say 'What the heck!?' or 'Are you serious!?'</p>
+                    
+                    <h3>Example</h3>
+                    <p>Imagine you're at a restaurant, and your friend suddenly pours soy sauce on their ice cream. You look at them in shock and exclaim: <strong>NANDEYA NEN</strong></p>
+                    <img src="https://share1.cloudhq-mkt3.net/19de7f6ef87d0c.jpeg" alt="Shocked reaction to expensive uni" class="modal-image">
+                `
+            },
+            4: {
+                title: "いただきます (itadakimasu)",
+                date: "June 24, 2025",
+                content: `
+                    <em>Pronunciation: ee-tah-dah-KEE-mahs</em>
+                    <h3>Meaning</h3>
+                    <p>"I humbly receive." — Said before eating to show gratitude for the food, the people who prepared it, and the life that was taken to provide it.</p>
+                    
+                    <div class="tone-indicator">
+                        <h3>Tone</h3>
+                        <p>Casual —————— <span>O</span>— Formal (universally acceptable)</p>
+                        <p>Playful — <span>O</span>—————— Serious</p>
+                        <p>It's polite but completely normal in any setting—from family dinner to Michelin-star restaurant.</p>
+                    </div>
+                    
+                    <h3>Example</h3>
+                    <p>Imagine you decide to eat at Ichiran—the famous ramen spot in Tokyo that lets solo diners (and groups) enjoy their own little booths. Your favorite chashu ramen arrives alongside your friends' bowls. Hands clasped, you all cheerfully say <strong>「Itadakimasu!」</strong> and then dig right in.</p>
+                    <img src="https://share1.cloudhq-mkt3.net/0946456019cbd8.jpeg" alt="Shocked reaction to expensive uni" class="modal-image">
+                    
+                    <h3>Listen to pronunciation</h3>
+                    <a href="https://drive.google.com/file/d/13JPb5sj5QYmnPtrT0hGoqjz2Eih__H1P/view?usp=sharing" class="listen-btn">
+                        ▶ LISTEN TO PRONUNCIATION
+                    </a>
+                    
+                    <h3>Pronunciation Breakdown</h3>
+                    <table class="pronunciation-table">
+                        <tr>
+                            <td>い</td>
+                            <td>Ee</td>
+                            <td>Like "i" in "imagine"</td>
+                        </tr>
+                        <tr>
+                            <td>た</td>
+                            <td>Tah</td>
+                            <td>Like "ta" in "tap"</td>
+                        </tr>
+                        <tr>
+                            <td>だ</td>
+                            <td>Dah</td>
+                            <td>Like "da" in "dank"</td>
+                        </tr>
+                        <tr>
+                            <td>き</td>
+                            <td>Kee</td>
+                            <td>Like "ki" in "kiss"</td>
+                        </tr>
+                        <tr>
+                            <td>ま</td>
+                            <td>Mah</td>
+                            <td>Like "ma" in "manaboo"</td>
+                        </tr>
+                        <tr>
+                            <td>す</td>
+                            <td>Ss</td>
+                            <td>Like "s" in "snake"</td>
+                        </tr>
+                    </table>
+                    <p class="pronunciation-note">Note: Every letter is pronounced quickly with emphasis on 'tah'</p>
+                `
+            }
+        };
 
-        // View buttons functionality
+        const modal = document.getElementById('newsletter-modal');
+        const modalContent = document.getElementById('modal-content-display');
+        const closeBtn = document.querySelector('.close-modal');
+        const viewButtons = document.querySelectorAll('.view-btn');
+
         viewButtons.forEach(button => {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -45,45 +767,40 @@
                         ${newsletter.content}
                     `;
                     modal.style.display = 'flex';
-                    document.documentElement.classList.add('modal-open'); // Changed from body style
+                    document.documentElement.classList.add('modal-open');
+                    document.body.classList.add('modal-open');
                     
-                    // Focus on modal for accessibility
                     modal.setAttribute('aria-hidden', 'false');
                     closeBtn.focus();
                 }
             });
         });
 
-        // Close modal
         function closeModal() {
             modal.style.display = 'none';
-            document.documentElement.classList.remove('modal-open'); // Changed from body style
+            document.documentElement.classList.remove('modal-open');
+            document.body.classList.remove('modal-open');
             modal.setAttribute('aria-hidden', 'true');
             
-            // Return focus to the button that opened the modal
             const focusedButtonBeforeModal = document.activeElement;
             if (focusedButtonBeforeModal) {
                 focusedButtonBeforeModal.focus();
             }
         }
         
-        // [Rest of your existing event listeners remain exactly the same]
-    </script>
-
-    <!-- Add this new style tag right before </body> -->
-    <style>
-        /* New CSS for modal open state */
-        html.modal-open {
-            overflow: hidden;
-            position: relative;
-            height: 100%;
-        }
+        closeBtn.addEventListener('click', closeModal);
         
-        body.modal-open {
-            overflow: hidden;
-            position: relative;
-            height: 100%;
-        }
-    </style>
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal.style.display === 'flex') {
+                closeModal();
+            }
+        });
+    </script>
 </body>
 </html>
