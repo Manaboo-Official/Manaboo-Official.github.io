@@ -416,6 +416,17 @@
             border-radius: var(--radius-sm);
             box-shadow: var(--shadow);
         }
+
+        /* Email-specific styles for modal content */
+        .email-content-block {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            border: 1px solid #E9CBA7;
+            width: 100%;
+            padding: 20px;
+        }
         
         /* Email-style footer */
         .email-footer {
@@ -509,9 +520,53 @@
         <div class="newsletter-list">
             <div class="newsletter-item">
                 <div class="content">
+                    <div class="date">September 30, 2025</div>
+                    <div class="title">やりおった (yariotta)</div>
+                    <div class="desc">A reaction word to something you only believe about 5% that's going to happen, whether good or bad, but someone actually does it. Means 'damn, you (or they) really did it'.</div>
+                </div>
+                <div class="action">
+                    <a href="#" class="view-btn" data-id="10">View Details</a>
+                </div>
+            </div>
+
+            <div class="newsletter-item">
+                <div class="content">
+                    <div class="date">September 23, 2025</div>
+                    <div class="title">朝飯前 (Asameshi mae)</div>
+                    <div class="desc">It means 'piece of cake' or 'easy peasy'. Something so easy that you can do it even before eating breakfast.</div>
+                </div>
+                <div class="action">
+                    <a href="#" class="view-btn" data-id="9">View Details</a>
+                </div>
+            </div>
+
+            <div class="newsletter-item">
+                <div class="content">
+                    <div class="date">September 9, 2025</div>
+                    <div class="title">金魚のフン (Kingyo no fun)</div>
+                    <div class="desc">It refers to someone who is a mooch. Literally, the phrase means a goldfish's poop, but in Japan it's used casually to describe a person (or oneself) mooching off others in a funny way. 😃</div>
+                </div>
+                <div class="action">
+                    <a href="#" class="view-btn" data-id="8">View Details</a>
+                </div>
+            </div>
+
+            <div class="newsletter-item">
+                <div class="content">
+                    <div class="date">July 15, 2025</div>
+                    <div class="title">おかげさまで (Okagesama de)</div>
+                    <div class="desc">"Thanks to you," You can add anything afterwards or keep it as is. If there's a specific thing you would like to mention after "thanks to you" then you should 😊</div>
+                </div>
+                <div class="action">
+                    <a href="#" class="view-btn" data-id="7">View Details</a>
+                </div>
+            </div>
+
+            <div class="newsletter-item">
+                <div class="content">
                     <div class="date">July 8, 2025</div>
                     <div class="title">とりビーですかね (tori bee desu ka ne)</div>
-                    <div class="desc">“Kick it off with a beer?” A super-casual contraction of とりあえずビール (“beer for now”) often heard at izakaya or casual dinners when everyone’s ready to place the first drink order.</div>
+                    <div class="desc">"Kick it off with a beer?" A super-casual contraction of とりあえずビール ("beer for now") often heard at izakaya or casual dinners when everyone's ready to place the first drink order.</div>
                 </div>
                 <div class="action">
                     <a href="#" class="view-btn" data-id="6">View Details</a>
@@ -819,7 +874,7 @@
                 content: `
                     <em>Pronunciation: to-RI-BII-des-ka-NE</em>
                     <h3>Meaning</h3>
-                    <p>“Kick it off with a beer?” A super-casual contraction of とりあえずビール (“beer for now”) often heard at izakaya or casual dinners when everyone’s ready to place the first drink order.</p>
+                    <p>"Kick it off with a beer?" A super-casual contraction of とりあえずビール ("beer for now") often heard at izakaya or casual dinners when everyone's ready to place the first drink order.</p>
                     
                     <div class="tone-indicator">
                         <h3>Tone</h3>
@@ -828,7 +883,7 @@
                     </div>
                     
                     <h3>Example</h3>
-                    <p>Imagine you went fishing in Japan for some Suzuki, waking up early to start from 5am until 4pm and caught nothing. You go to dinner at Torikizoku and grab a table with your fishing buddies. The waiter comes in 3 seconds and asks if you’re ready to order. You ask the group “toribee desukane?”</p>
+                    <p>Imagine you went fishing in Japan for some Suzuki, waking up early to start from 5am until 4pm and caught nothing. You go to dinner at Torikizoku and grab a table with your fishing buddies. The waiter comes in 3 seconds and asks if you're ready to order. You ask the group "toribee desukane?"</p>
                     <img src="https://share1.cloudhq-mkt3.net/fffb661852c545.jpeg" alt="Shocked reaction to expensive uni" class="modal-image">
                     
                     <h3>Listen to pronunciation</h3>
@@ -855,6 +910,164 @@
                             <td>Ka-Ne</td>
                         </tr>
                     </table>
+                `
+            },
+            7: {
+                title: "おかげさまで (Okagesama de)",
+                date: "July 15, 2025",
+                content: `
+                    <em>Pronunciation: Okagesama de (oka-ge-sa-ma-de)</em>
+                    <h3>Meaning</h3>
+                    <p>"Thanks to you," You can add anything afterwards or keep it as is. If there's a specific thing you would like to mention after "thanks to you" then you should 😊</p>
+                    
+                    <div class="tone-indicator">
+                        <h3>Tone</h3>
+                        <p>Formal —— <span>O</span>——— Casual</p>
+                        <p>Cutesy — <span>O</span>—————— Gorilla</p>
+                        <p>Sarcastic ——— <span>O</span>——— Genuine</p>
+                    </div>
+                    
+                    <h3>Example</h3>
+                    <p>Imagine you miss your Friday lecture at 8 a.m. because you were at your bestie's party last night, celebrating his last day at the university before he moves to another country. A classmate/friend generously shares their notes from the lecture with you. You rely on those notes extensively during the test, and afterwards your friend asks, "How did you do?!" You reply, "Okagesama de!"</p>
+                    
+                    <img src="https://share1.cloudhq-mkt3.net/2916e4b17805a4.png" alt="Example image 1" class="modal-image">
+                    <img src="https://share1.cloudhq-mkt3.net/b348015a7ee4f7.png" alt="Example image 2" class="modal-image">
+                    
+                    <a href="https://drive.google.com/file/d/1NqpDqoCjXKKPcEIDx6x0eEC7p0GKQWJj/view?usp=sharing" class="listen-btn">
+                        ▶ LISTEN TO PRONUNCIATION
+                    </a>
+                    
+                    <h3>Pronunciation Breakdown</h3>
+                    <table class="pronunciation-table">
+                        <tr>
+                            <td>おか</td>
+                            <td>Oka</td>
+                        </tr>
+                        <tr>
+                            <td>げ</td>
+                            <td>Ge</td>
+                        </tr>
+                        <tr>
+                            <td>さ</td>
+                            <td>Sa</td>
+                        </tr>
+                        <tr>
+                            <td>ま</td>
+                            <td>Ma</td>
+                        </tr>
+                        <tr>
+                            <td>で</td>
+                            <td>De</td>
+                        </tr>
+                    </table>
+                `
+            },
+            8: {
+                title: "金魚のフン (Kingyo no fun)",
+                date: "September 9, 2025",
+                content: `
+                    <em>Pronunciation: Kingyo no fun (kin-gyo-no-fun)</em>
+                    <h3>Meaning</h3>
+                    <p>It refers to someone who is a mooch. Literally, the phrase means a goldfish's poop, but in Japan it's used casually to describe a person (or oneself) mooching off others in a funny way. 😃</p>
+                    
+                    <div class="tone-indicator">
+                        <h3>Tone</h3>
+                        <p>Casual ——— <span>O</span>——————- Formal</p>
+                        <p>Serious ——————- <span>O</span>——— Playful</p>
+                    </div>
+                    
+                    <h3>Example</h3>
+                    <p>Imagine you are chilling at a friend's apartment and decide to watch something. They turn on the TV and flexes with the question 'pick your poison, I have all the subscriptions.' Surprised that they have Crunchyroll on it you ask 'how do you have the legendary Crunchyroll sub!?' Your friend answers, 'these are all my friend's accounts, I'm a Kingyo no fun!'</p>
+                    
+                    <img src="https://share1.cloudhq-mkt3.net/3afe5eb7a95699.png" alt="Example image" class="modal-image">
+                    
+                    <a href="https://drive.google.com/file/d/1hqw6fdRzO6FFC3nxec-mifMD-46fKhgr/view?usp=sharing" class="listen-btn">
+                        ▶ LISTEN TO PRONUNCIATION
+                    </a>
+                    
+                    <h3>Pronunciation Breakdown</h3>
+                    <table class="pronunciation-table">
+                        <tr>
+                            <td>金</td>
+                            <td>Kin</td>
+                        </tr>
+                        <tr>
+                            <td>魚</td>
+                            <td>Gyo</td>
+                        </tr>
+                        <tr>
+                            <td>の</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>フン</td>
+                            <td>Fun</td>
+                        </tr>
+                    </table>
+                `
+            },
+            9: {
+                title: "朝飯前 (Asameshi mae)",
+                date: "September 23, 2025",
+                content: `
+                    <em>Pronunciation: Asameshi mae (Asa-meshi-ma-eh)</em>
+                    <h3>Meaning</h3>
+                    <p>It means 'piece of cake' or 'easy peasy'. Something so easy that you can do it even before eating breakfast.</p>
+                    
+                    <div class="tone-indicator">
+                        <h3>Tone</h3>
+                        <p>Casual — <span>O</span>——————— Formal</p>
+                        <p>Serious ————— <span>O</span>—— Playful</p>
+                    </div>
+                    
+                    <h3>Example</h3>
+                    <p>Imagine a girl you have a crush on tells you that she's been getting harassed by the yakuza recently. Without a second thought, you offer to take matters into your own hands and she can just chillax. You explain that you will single-handedly take down the boss to settle things. <br>Worried, your crush asks, "Are… are you sure you can take down the yakuza boss?" <br>You respond with a smile, "Yeah, it's Asameshi Mae!"</p>
+                    
+                    <img src="https://share1.cloudhq-mkt3.net/199a87de0d3a18.jpeg" alt="Family saying itadakimasu before meal" class="modal-image">
+                    
+                    <a href="https://drive.google.com/file/d/1HG3LB8jl4HXy0t1d-FOj9rsDfn2aHLxi/view?usp=drive_link" class="listen-btn">
+                        ▶ LISTEN TO PRONUNCIATION
+                    </a>
+                    
+                    <h3>Pronunciation Breakdown</h3>
+                    <table class="pronunciation-table">
+                        <tr>
+                            <td>朝</td>
+                            <td>Asa</td>
+                        </tr>
+                        <tr>
+                            <td>飯</td>
+                            <td>Meshi</td>
+                        </tr>
+                        <tr>
+                            <td>前</td>
+                            <td>Mae</td>
+                        </tr>
+                    </table>
+                `
+            },
+            10: {
+                title: "やりおった (yariotta)",
+                date: "September 30, 2025",
+                content: `
+                    <em>Pronunciation: yariotta (Ya-ri-o-tta)</em>
+                    <h3>Meaning</h3>
+                    <p>A reaction word to something you only believe about 5% that's going to happen, whether good or bad, but someone actually does it. Means 'damn, you (or they) really did it'.</p>
+                    
+                    <div class="tone-indicator">
+                        <h3>Tone</h3>
+                        <p>Casual — <span>O</span>——————— Formal</p>
+                        <p>Serious  ————— <span>O</span>———— Playful</p>
+                    </div>
+                    
+                    <h3>Example</h3>
+                    <p>Imagine you meet with your business partner every week to make the weekly language learning newsletter together. Last week he tells you how he's very excited about his trip to NY and Puerto Rico for the weekend, but assures you that the meeting is still on. When the meeting day comes, he completely forgets and doesn't answer any of your calls. Leaving you alone at the keyboard, you mumble "Dang, he yariotta!"</p>
+                    
+                    <img src="https://share1.cloudhq-mkt3.net/5a3b2b08aaa9ba.jpeg" alt="Family saying itadakimasu before meal" class="modal-image">
+                    
+                    <a href="https://drive.google.com/file/d/1IMu3x4R6OpdWZGBui5snO1K80yYSugNJ/view?usp=drive_link" class="listen-btn">
+                        ▶ LISTEN TO PRONUNCIATION
+                    </a>
                 `
             }
         };
