@@ -22,18 +22,18 @@
             --radius-lg: 16px;
             --safe-area: env(safe-area-inset-top, 0px);
         }
-        
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-        
+
         html {
             scroll-behavior: smooth;
             background-color: var(--bg);
         }
-        
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background-color: var(--bg);
@@ -46,17 +46,17 @@
             -webkit-font-smoothing: antialiased;
             text-rendering: optimizeLegibility;
         }
-        
+
         @supports (font-variation-settings: normal) {
             body { font-family: 'Inter var', -apple-system, BlinkMacSystemFont, sans-serif; }
         }
-        
+
         header {
             text-align: center;
             padding: calc(20px + var(--safe-area)) 0 20px;
             background-color: var(--bg);
         }
-        
+
         .logo-container {
             display: flex;
             align-items: center;
@@ -64,14 +64,14 @@
             gap: 15px;
             margin-bottom: 10px;
         }
-        
+
         .logo-img {
             height: 60px;
             width: auto;
             max-width: 100%;
             filter: drop-shadow(0 2px 4px rgba(222, 125, 122, 0.2));
         }
-        
+
         h1 {
             color: var(--primary);
             margin: 0;
@@ -79,7 +79,7 @@
             font-weight: 700;
             letter-spacing: -0.5px;
         }
-        
+
         .tagline {
             font-size: clamp(1rem, 2vw, 1.2rem);
             color: var(--text-light);
@@ -88,14 +88,14 @@
             line-height: 1.5;
             padding: 0 1rem;
         }
-        
+
         .subscribe {
             margin: 1rem auto;
             text-align: center;
             max-width: 500px;
             padding: 0 1rem;
         }
-        
+
         .subscribe-btn {
             display: inline-flex;
             align-items: center;
@@ -115,17 +115,17 @@
             width: 100%;
             max-width: 20rem;
         }
-        
+
         .subscribe-btn:hover {
             background-color: var(--primary-dark);
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(222, 125, 122, 0.4);
         }
-        
+
         .subscribe-btn:active {
             transform: translateY(0);
         }
-        
+
         .section-title {
             font-size: clamp(1.5rem, 4vw, 1.8rem);
             margin: 1.5rem auto 1rem;
@@ -135,7 +135,7 @@
             font-weight: 650;
             color: var(--text);
         }
-        
+
         .section-title::after {
             content: '';
             display: block;
@@ -145,7 +145,7 @@
             margin: 0.75rem auto 0;
             border-radius: 2px;
         }
-        
+
         .newsletter-list {
             width: 90%;
             max-width: 800px;
@@ -153,7 +153,7 @@
             padding: 0 1rem 1rem;
             background-color: var(--bg);
         }
-        
+
         .newsletter-item {
             background-color: var(--card-bg);
             border-radius: var(--radius-md);
@@ -167,7 +167,7 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .newsletter-item::before {
             content: '';
             position: absolute;
@@ -177,24 +177,24 @@
             height: 100%;
             background: var(--primary);
         }
-        
+
         .newsletter-item:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
-        
+
         .newsletter-item .content {
             width: calc(100% - 120px);
             padding-right: 1rem;
         }
-        
+
         .newsletter-item .date {
             font-size: 0.85rem;
             color: var(--text-light);
             margin-bottom: 0.25rem;
             font-weight: 500;
         }
-        
+
         .newsletter-item .title {
             font-weight: 700;
             font-size: clamp(1.1rem, 3vw, 1.3rem);
@@ -202,20 +202,20 @@
             color: var(--primary);
             line-height: 1.3;
         }
-        
+
         .newsletter-item .desc {
             font-size: clamp(0.9rem, 2vw, 1rem);
             color: var(--text-light);
             line-height: 1.5;
         }
-        
+
         .newsletter-item .action {
             display: flex;
             align-items: center;
             justify-content: center;
             width: 110px;
         }
-        
+
         .newsletter-item a {
             color: var(--primary);
             font-weight: 600;
@@ -229,12 +229,12 @@
             text-align: center;
             white-space: nowrap;
         }
-        
+
         .newsletter-item a:hover {
             background-color: rgba(222, 125, 122, 0.2);
             border-color: rgba(222, 125, 122, 0.3);
         }
-        
+
         /* Modal Styles */
         .modal {
             display: none;
@@ -253,7 +253,7 @@
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
         }
-        
+
         .modal-content {
             background-color: var(--card-bg);
             border-radius: var(--radius-md);
@@ -268,12 +268,12 @@
             box-shadow: 0 8px 32px rgba(0,0,0,0.12);
             margin: var(--safe-area) 0;
         }
-        
+
         @keyframes modalFadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
+
         .close-modal {
             position: absolute;
             top: 1rem;
@@ -291,44 +291,44 @@
             justify-content: center;
             border-radius: 50%;
         }
-        
+
         .close-modal:hover {
             color: var(--primary);
             background-color: rgba(222, 125, 122, 0.1);
         }
-        
+
         .newsletter-content {
             padding: 0.5rem 0;
         }
-        
+
         .newsletter-content h2 {
             color: var(--primary);
             margin-bottom: 0.75rem;
             font-size: clamp(1.5rem, 4vw, 1.8rem);
             font-weight: 700;
         }
-        
+
         .newsletter-date {
             font-size: 0.9rem;
             color: var(--text-light);
             margin-bottom: 1.5rem;
             font-weight: 500;
         }
-        
+
         .newsletter-content h3 {
             margin: 1.5rem 0 0.75rem;
             color: var(--text);
             font-size: clamp(1.1rem, 3vw, 1.3rem);
             font-weight: 650;
         }
-        
+
         .newsletter-content p {
             margin-bottom: 1rem;
             font-size: clamp(1rem, 2vw, 1.1rem);
             line-height: 1.6;
             color: var(--text);
         }
-        
+
         .newsletter-content em {
             color: var(--text-light);
             display: block;
@@ -427,7 +427,7 @@
             width: 100%;
             padding: 20px;
         }
-        
+
         /* Email-style footer */
         .email-footer {
             width: 100%;
@@ -446,27 +446,27 @@
             header {
                 padding: calc(20px + var(--safe-area)) 0 20px;
             }
-            
+
             .logo-img {
                 height: 50px;
             }
-            
+
             .newsletter-item {
                 flex-direction: column;
                 align-items: flex-start;
             }
-            
+
             .newsletter-item .content {
                 width: 100%;
                 padding-right: 0;
                 margin-bottom: 1rem;
             }
-            
+
             .newsletter-item .action {
                 width: 100%;
                 justify-content: flex-start;
             }
-            
+
             .modal-content {
                 padding: 2rem 1.5rem;
                 max-height: 85vh;
@@ -476,17 +476,17 @@
                 max-width: 100%;
             }
         }
-        
+
         @media (max-width: 480px) {
             .subscribe-btn {
                 padding: 0.7rem 1.5rem;
                 font-size: 0.9rem;
             }
-            
+
             .newsletter-content h2 {
                 font-size: 1.5rem;
             }
-            
+
             .modal-content {
                 padding: 1.75rem 1.25rem;
                 max-height: 80vh;
@@ -514,10 +514,43 @@
             </a>
         </div>
     </header>
-    
+
     <main>
         <h2 class="section-title">Latest Japanese Phrases</h2>
         <div class="newsletter-list">
+            <div class="newsletter-item">
+                <div class="content">
+                    <div class="date">October 28, 2025</div>
+                    <div class="title">あなた、すごすぎる</div>
+                    <div class="desc">It means "you're soooo good." When someone impresses you so much that your jaw drops, you can tell them this.</div>
+                </div>
+                <div class="action">
+                    <a href="#" class="view-btn" data-id="11">View Details</a>
+                </div>
+            </div>
+
+            <div class="newsletter-item">
+                <div class="content">
+                    <div class="date">October 21, 2025</div>
+                    <div class="title">２次会</div>
+                    <div class="desc">Nijikai means “the second party”. After the main event — like a wedding reception, company party, or class reunion — the real fun continues at the nijikai. Think of it as the afterparty, often in karaoke bars, izakayas, or lounges.</div>
+                </div>
+                <div class="action">
+                    <a href="#" class="view-btn" data-id="12">View Details</a>
+                </div>
+            </div>
+
+            <div class="newsletter-item">
+                <div class="content">
+                    <div class="date">October 14, 2025</div>
+                    <div class="title">十八番</div>
+                    <div class="desc">“Your signature move, specialty, or go-to skill/song - something you're really confident about.</div>
+                </div>
+                <div class="action">
+                    <a href="#" class="view-btn" data-id="13">View Details</a>
+                </div>
+            </div>
+
             <div class="newsletter-item">
                 <div class="content">
                     <div class="date">September 30, 2025</div>
@@ -594,7 +627,7 @@
                     <a href="#" class="view-btn" data-id="4">View Details</a>
                 </div>
             </div>
-            
+
             <div class="newsletter-item">
                 <div class="content">
                     <div class="date">June 17, 2025</div>
@@ -605,7 +638,7 @@
                     <a href="#" class="view-btn" data-id="1">View Details</a>
                 </div>
             </div>
-            
+
             <div class="newsletter-item">
                 <div class="content">
                     <div class="date">June 10, 2025</div>
@@ -616,7 +649,7 @@
                     <a href="#" class="view-btn" data-id="2">View Details</a>
                 </div>
             </div>
-            
+
             <div class="newsletter-item">
                 <div class="content">
                     <div class="date">June 5, 2025</div>
@@ -627,9 +660,10 @@
                     <a href="#" class="view-btn" data-id="3">View Details</a>
                 </div>
             </div>
-        </div>
+
+        </div></div>
     </main>
-    
+
     <div class="email-footer">
         <table role="presentation" width="100%" cellspacing="0" cellpadding="0" bgcolor="#F4F0E8">
           <tbody>
@@ -646,15 +680,15 @@
                                 <p style="margin: 0;">Manaboo skips the textbook fluff and dives straight into the Japanese words and phrases you'll actually use every day.
                                   <br>
                                   <br>
-                                  <span style="font-style: italic; color: #999999;">(Bonus: "Manaboo" comes from 
+                                  <span style="font-style: italic; color: #999999;">(Bonus: "Manaboo" comes from
                                     <em>manabu</em>—"to learn"—so it literally means "let's learn!")
                                   </span>
                                 </p>
                               </td>
                             </tr>
                           </tbody>
-                        </table> 
-                        <p style="margin: 10px 0 0; color: #3e3e3e; font-size: 12px; line-height: 1.5;">© 2025 Manaboo Japanese Language Learning 
+                        </table>
+                        <p style="margin: 10px 0 0; color: #3e3e3e; font-size: 12px; line-height: 1.5;">© 2025 Manaboo Japanese Language Learning
                           <br>All rights reserved.
                         </p>
                       </td>
@@ -666,7 +700,7 @@
           </tbody>
         </table>
     </div>
-    
+
     <div id="newsletter-modal" class="modal">
         <div class="modal-content">
             <button class="close-modal" aria-label="Close modal">&times;</button>
@@ -677,6 +711,84 @@
 
     <script>
         const newsletters = {
+            13: {
+                title: "十八番",
+                date: "October 14, 2025",
+                content: `
+                    <em>Pronunciation: Oha-ko</em>
+<h3>Meaning</h3>
+<p>“Your signature move, specialty, or go-to skill/song - something you're really confident about.</p>
+<div class="tone-indicator">
+<h3>Tone</h3>
+<p>Casual ———— O———— Formal</p>
+<p>Serious ——————— O— Playful</p>
+</div>
+<h3>Example</h3>
+<p>Imagine you attend your elementary school friends wedding and go to karaoke afterparty. You realize one of them is hella good and tell them “WOAH, you are really good at singing, I wish I can sing like you!” She responds “Oh this is my ohako song! Do you have an ohako song?” Knowing you can’t sing for life, you say “I can’t sing, oversleeping is my ohako! 😂”</p>
+<img src="https://share1.cloudhq-mkt3.net/13e74252b8ca69.jpeg" alt="Example illustration" class="modal-image">
+<h3>Listen to pronunciation</h3>
+<a href="https://drive.google.com/file/d/1XmshLJ0YDgaVcoZDEqsWCcrrqVqpUI-Z/view?usp=drive_link" class="listen-btn" target="_blank" rel="noopener">▶ LISTEN TO PRONUNCIATION</a>
+                `
+            },
+            12: {
+                title: "２次会",
+                date: "October 21, 2025",
+                content: `
+                    <em>Pronunciation: Ni-ji-kai</em>
+<h3>Meaning</h3>
+<p>Nijikai means “the second party”. After the main event — like a wedding reception, company party, or class reunion — the real fun continues at the nijikai. Think of it as the afterparty, often in karaoke bars, izakayas, or lounges.</p>
+<table style="border: 1px solid #E9CBA7; border-radius: 8px; background-color: #fff9f4; margin: 20px auto; max-width: 500px;" role="presentation" width="100%" cellspacing="0" cellpadding="0">
+<tbody><tr><td style="padding: 15px 20px;">
+<p style='margin: 5px 0; font-size: 15px; color: #3e3e3e;'>1️⃣</p>
+<p style='margin: 5px 0; font-size: 15px; color: #3e3e3e;'>                                Ichijikai (1次会) — the official one, like a dinner or reception.</p>
+<p style='margin: 5px 0; font-size: 15px; color: #3e3e3e;'>2️⃣</p>
+<p style='margin: 5px 0; font-size: 15px; color: #3e3e3e;'>                                Nijikai (2次会) — where things get looser, funnier, and slightly blurrier.</p>
+<p style='margin: 5px 0; font-size: 15px; color: #3e3e3e;'>3️⃣</p>
+<p style='margin: 5px 0; font-size: 15px; color: #3e3e3e;'>                                Sanjikai (3次会) — the after-afterparty for the brave souls who keep going!</p>
+</td></tr></tbody></table>
+<div class="tone-indicator">
+<h3>Tone</h3>
+<p>Casual ———— O ———— Formal</p>
+<p>Serious ————— O ———— Playful</p>
+</div>
+<h3>Example</h3>
+<p>Imagine you’re at your high school friend’s wedding in Japan. Then you see her — your ultimate high school crush. Instantly, memories flood back: all those days you spent daydreaming about her, the jokes you never made, the confession you never gave. During the reception, you manage to chat with her and some old classmates. You stumble a little, trying to keep the conversation going — but you swear, for a moment, there’s a tiny spark. As the reception starts winding down, you realize your chance is slipping away. The music fades, the lights soften, and guests begin talking about the next stop of the night. Your heart races. You take a breath, look at her, and ask the ultimate question: “Are you going to the nijikai?”</p>
+<img src="https://share1.cloudhq-mkt3.net/eec0b36240bf70.jpeg" alt="Example illustration" class="modal-image">
+<h3>Listen to pronunciation</h3>
+<a href="https://drive.google.com/file/d/1-wmleRXhxy-I5PwNnqSgAEwLEAtiT3Lt/view?usp=drive_link" class="listen-btn" target="_blank" rel="noopener">▶ LISTEN TO PRONUNCIATION</a>
+                `
+            },
+            11: {
+                title: "あなた、すごすぎる",
+                date: "October 28, 2025",
+                content: `
+                    <em>Pronunciation: anata, sugosugiru</em>
+<h3>Meaning</h3>
+<p>It means "you're soooo good." When someone impresses you so much that your jaw drops, you can tell them this.</p>
+<table style="border: 1px solid #E9CBA7; border-radius: 8px; background-color: #fff9f4; margin: 20px auto; max-width: 500px;" role="presentation" width="100%" cellspacing="0" cellpadding="0">
+<tbody><tr><td style="padding: 15px 20px;">
+<p style='margin: 5px 0; font-size: 15px; color: #3e3e3e;'>👉</p>
+<p style='margin: 5px 0; font-size: 15px; color: #3e3e3e;'>                                Sugoi (すごい) — Amazing.</p>
+<p style='margin: 5px 0; font-size: 15px; color: #3e3e3e;'>+Sugiru (すぎる) — Too much.</p>
+<p style='margin: 5px 0; font-size: 15px; color: #3e3e3e;'>=Sugosugiru(すごすぎる) — Too Amazing!</p>
+</td></tr></tbody></table>
+<div class="tone-indicator">
+<h3>Tone</h3>
+<p>Casual — O ——————— Formal</p>
+<p>Serious ———————— O — Playful</p>
+</div>
+<h3>Example</h3>
+<p>Imagine your weekly tennis buddy texts you in the morning: "Bro... she told me she couldn't believe I actually did it 7 times in a row."
+                You blink, jaw dropped.
+              "Wait WHAT?! 7 times?!"
+            He then sends you a video of him hitting a tennis serve into a small can and says that he won a free trip to Hawaii for hitting it 7 times in a row.
+          You can hear his girlfriend say: "Toshi! Anata, sugosugiru!"</p>
+<img src="https://share1.cloudhq-mkt3.net/839c51f50d566c.png" alt="Example illustration" class="modal-image">
+<h3>Listen to pronunciation</h3>
+<a href="https://drive.google.com/file/d/1kxX5BJPZ_gRLB28xmTp9a5vZaTO2HAjI/view?usp=drive_link" class="listen-btn" target="_blank" rel="noopener">▶ LISTEN TO PRONUNCIATION</a>
+<a href="https://youtu.be/kGXWDqQB3NU?si=zmgt9qhya9Hp_X2r" class="listen-btn" target="_blank" rel="noopener" style="background: linear-gradient(135deg, #FF0000, #CC0000); margin-top: 10px;">▶ YOUTUBE SAMPLE VIDEO</a>
+                `
+            },
             1: {
                 title: "マジで (Maji de)",
                 date: "June 17, 2025",
@@ -684,18 +796,18 @@
                     <em>Pronunciation: MAH-jee-deh</em>
                     <h3>Meaning</h3>
                     <p>"Seriously?" or "No way!" — A casual expression of surprise or disbelief, similar to "Really?" in English.</p>
-                    
+
                     <div class="tone-indicator">
                         <h3>Tone</h3>
                         <p>Professional —————— <span>O</span>— Casual</p>
                         <p>Cutesy ————— <span>O</span>—— Gorilla</p>
                     </div>
-                    
+
                     <h3>Example</h3>
                     <p>You go to your favorite Sushi restaurant feeling like you want some Uni. The price is listed as "MP", usually meaning market price. You ask the waitress what the price of 1 piece of Uni is. The waitress says "It's $100".</p>
                     <p>In shock you say: <strong>"MAJIDE?!??!!?"</strong></p>
                     <img src="https://share1.cloudhq-mkt3.net/2748f265123ab8.jpeg" alt="Friends on bullet train" class="modal-image">
-                    
+
                     <h3>Pronunciation Breakdown:</h3>
                     <table class="pronunciation-table">
                         <tr>
@@ -724,12 +836,12 @@
                     <em>Pronunciation: SOO-mahn</em>
                     <h3>Meaning</h3>
                     <p>Casual way of saying "My bad/I am sorry". Less polite than すみません (sumimasen).</p>
-                    
+
                     <h3>Example</h3>
                     <p>Imagine you're taking a bullet train to Kyoto and sitting next to your friend who is taking a nap. You accidentally poke his side stomach with your strong zero and wake him up.</p>
                     <p>You say: <strong>"SUMAN！" ("Oh, sorry! lol")</strong></p>
                     <img src="https://share1.cloudhq-mkt3.net/1765d352a5b76d.png" alt="Friends on bullet train" class="modal-image">
-                    
+
                     <h3>Pronunciation Breakdown:</h3>
                     <table class="pronunciation-table">
                         <tr>
@@ -758,7 +870,7 @@
                     <em>Pronunciation: NAN-deh-ya-NEN</em>
                     <h3>Meaning</h3>
                     <p>A casual and humorous way to say 'What the heck!?' or 'Are you serious!?'</p>
-                    
+
                     <h3>Example</h3>
                     <p>Imagine you're at a restaurant, and your friend suddenly pours soy sauce on their ice cream. You look at them in shock and exclaim: <strong>NANDEYA NEN</strong></p>
                     <img src="https://share1.cloudhq-mkt3.net/19de7f6ef87d0c.jpeg" alt="Shocked reaction to expensive uni" class="modal-image">
@@ -771,23 +883,23 @@
                     <em>Pronunciation: ee-tah-dah-KEE-mahs</em>
                     <h3>Meaning</h3>
                     <p>"I humbly receive." — Said before eating to show gratitude for the food, the people who prepared it, and the life that was taken to provide it.</p>
-                    
+
                     <div class="tone-indicator">
                         <h3>Tone</h3>
                         <p>Casual —————— <span>O</span>— Formal (universally acceptable)</p>
                         <p>Playful — <span>O</span>—————— Serious</p>
                         <p>It's polite but completely normal in any setting—from family dinner to Michelin-star restaurant.</p>
                     </div>
-                    
+
                     <h3>Example</h3>
                     <p>Imagine you decide to eat at Ichiran—the famous ramen spot in Tokyo that lets solo diners (and groups) enjoy their own little booths. Your favorite chashu ramen arrives alongside your friends' bowls. Hands clasped, you all cheerfully say <strong>「Itadakimasu!」</strong> and then dig right in.</p>
                     <img src="https://share1.cloudhq-mkt3.net/0946456019cbd8.jpeg" alt="Shocked reaction to expensive uni" class="modal-image">
-                    
+
                     <h3>Listen to pronunciation</h3>
                     <a href="https://drive.google.com/file/d/13JPb5sj5QYmnPtrT0hGoqjz2Eih__H1P/view?usp=sharing" class="listen-btn">
                         ▶ LISTEN TO PRONUNCIATION
                     </a>
-                    
+
                     <h3>Pronunciation Breakdown</h3>
                     <table class="pronunciation-table">
                         <tr>
@@ -831,22 +943,22 @@
                     <em>Pronunciation: boo-sah-kah-wah</em>
                     <h3>Meaning</h3>
                     <p>a fun bit of Japanese slang that literally mashes together ブサイク (busaiku, "ugly") and カワイイ (kawaii, "cute"). Think of something (often a pet, mascot, stuffed toy, or even a meme-y celebrity) that's objectively homely yet somehow irresistibly charming.</p>
-                    
+
                     <div class="tone-indicator">
                         <h3>Tone</h3>
                         <p>Professional —————— <span>O</span>— Casual (universally acceptable)</p>
                         <p>Cutesy — <span>O</span>—————— Gorilla</p>
                     </div>
-                    
+
                     <h3>Example</h3>
                     <p>Imagine you go to a fish store to get a pet fish. In the fish tank, there is a really cool looking beta fish and another that is a goldfish called Demekin. Instead of buying the cool beta fish, you say "I want that Demekin! It is Busakawa!" - because something about it gives you joy that is unattainable anywhere else.</p>
                     <img src="https://share1.cloudhq-mkt3.net/34c53e23318fb3.jpeg" alt="Shocked reaction to expensive uni" class="modal-image">
-                    
+
                     <h3>Listen to pronunciation</h3>
                     <a href="https://drive.google.com/file/d/1-p5zgGdOeWB3jd_SpayihkrfVQAVHtuv/view?usp=drive_link" class="listen-btn">
                         ▶ LISTEN TO PRONUNCIATION
                     </a>
-                    
+
                     <h3>Pronunciation Breakdown</h3>
                     <table class="pronunciation-table">
                         <tr>
@@ -875,22 +987,22 @@
                     <em>Pronunciation: to-RI-BII-des-ka-NE</em>
                     <h3>Meaning</h3>
                     <p>"Kick it off with a beer?" A super-casual contraction of とりあえずビール ("beer for now") often heard at izakaya or casual dinners when everyone's ready to place the first drink order.</p>
-                    
+
                     <div class="tone-indicator">
                         <h3>Tone</h3>
                         <p>Professional —————— <span>O</span>— Casual (universally acceptable)</p>
                         <p>Cutesy ———- <span>O</span>—-——Gorilla</p>
                     </div>
-                    
+
                     <h3>Example</h3>
                     <p>Imagine you went fishing in Japan for some Suzuki, waking up early to start from 5am until 4pm and caught nothing. You go to dinner at Torikizoku and grab a table with your fishing buddies. The waiter comes in 3 seconds and asks if you're ready to order. You ask the group "toribee desukane?"</p>
                     <img src="https://share1.cloudhq-mkt3.net/fffb661852c545.jpeg" alt="Shocked reaction to expensive uni" class="modal-image">
-                    
+
                     <h3>Listen to pronunciation</h3>
                     <a href="https://drive.google.com/file/d/1nU0_DbUxiwlAyc4YQTclu5SVPv34erM1/view?usp=sharing" class="listen-btn">
                         ▶ LISTEN TO PRONUNCIATION
                     </a>
-                    
+
                     <h3>Pronunciation Breakdown</h3>
                     <table class="pronunciation-table">
                         <tr>
@@ -919,24 +1031,24 @@
                     <em>Pronunciation: Okagesama de (oka-ge-sa-ma-de)</em>
                     <h3>Meaning</h3>
                     <p>"Thanks to you," You can add anything afterwards or keep it as is. If there's a specific thing you would like to mention after "thanks to you" then you should 😊</p>
-                    
+
                     <div class="tone-indicator">
                         <h3>Tone</h3>
                         <p>Formal —— <span>O</span>——— Casual</p>
                         <p>Cutesy — <span>O</span>—————— Gorilla</p>
                         <p>Sarcastic ——— <span>O</span>——— Genuine</p>
                     </div>
-                    
+
                     <h3>Example</h3>
                     <p>Imagine you miss your Friday lecture at 8 a.m. because you were at your bestie's party last night, celebrating his last day at the university before he moves to another country. A classmate/friend generously shares their notes from the lecture with you. You rely on those notes extensively during the test, and afterwards your friend asks, "How did you do?!" You reply, "Okagesama de!"</p>
-                    
+
                     <img src="https://share1.cloudhq-mkt3.net/2916e4b17805a4.png" alt="Example image 1" class="modal-image">
                     <img src="https://share1.cloudhq-mkt3.net/b348015a7ee4f7.png" alt="Example image 2" class="modal-image">
-                    
+
                     <a href="https://drive.google.com/file/d/1NqpDqoCjXKKPcEIDx6x0eEC7p0GKQWJj/view?usp=sharing" class="listen-btn">
                         ▶ LISTEN TO PRONUNCIATION
                     </a>
-                    
+
                     <h3>Pronunciation Breakdown</h3>
                     <table class="pronunciation-table">
                         <tr>
@@ -969,22 +1081,22 @@
                     <em>Pronunciation: Kingyo no fun (kin-gyo-no-fun)</em>
                     <h3>Meaning</h3>
                     <p>It refers to someone who is a mooch. Literally, the phrase means a goldfish's poop, but in Japan it's used casually to describe a person (or oneself) mooching off others in a funny way. 😃</p>
-                    
+
                     <div class="tone-indicator">
                         <h3>Tone</h3>
                         <p>Casual ——— <span>O</span>——————- Formal</p>
                         <p>Serious ——————- <span>O</span>——— Playful</p>
                     </div>
-                    
+
                     <h3>Example</h3>
                     <p>Imagine you are chilling at a friend's apartment and decide to watch something. They turn on the TV and flexes with the question 'pick your poison, I have all the subscriptions.' Surprised that they have Crunchyroll on it you ask 'how do you have the legendary Crunchyroll sub!?' Your friend answers, 'these are all my friend's accounts, I'm a Kingyo no fun!'</p>
-                    
+
                     <img src="https://share1.cloudhq-mkt3.net/3afe5eb7a95699.png" alt="Example image" class="modal-image">
-                    
+
                     <a href="https://drive.google.com/file/d/1hqw6fdRzO6FFC3nxec-mifMD-46fKhgr/view?usp=sharing" class="listen-btn">
                         ▶ LISTEN TO PRONUNCIATION
                     </a>
-                    
+
                     <h3>Pronunciation Breakdown</h3>
                     <table class="pronunciation-table">
                         <tr>
@@ -1013,22 +1125,22 @@
                     <em>Pronunciation: Asameshi mae (Asa-meshi-ma-eh)</em>
                     <h3>Meaning</h3>
                     <p>It means 'piece of cake' or 'easy peasy'. Something so easy that you can do it even before eating breakfast.</p>
-                    
+
                     <div class="tone-indicator">
                         <h3>Tone</h3>
                         <p>Casual — <span>O</span>——————— Formal</p>
                         <p>Serious ————— <span>O</span>—— Playful</p>
                     </div>
-                    
+
                     <h3>Example</h3>
                     <p>Imagine a girl you have a crush on tells you that she's been getting harassed by the yakuza recently. Without a second thought, you offer to take matters into your own hands and she can just chillax. You explain that you will single-handedly take down the boss to settle things. <br>Worried, your crush asks, "Are… are you sure you can take down the yakuza boss?" <br>You respond with a smile, "Yeah, it's Asameshi Mae!"</p>
-                    
+
                     <img src="https://share1.cloudhq-mkt3.net/199a87de0d3a18.jpeg" alt="Family saying itadakimasu before meal" class="modal-image">
-                    
+
                     <a href="https://drive.google.com/file/d/1HG3LB8jl4HXy0t1d-FOj9rsDfn2aHLxi/view?usp=drive_link" class="listen-btn">
                         ▶ LISTEN TO PRONUNCIATION
                     </a>
-                    
+
                     <h3>Pronunciation Breakdown</h3>
                     <table class="pronunciation-table">
                         <tr>
@@ -1053,18 +1165,18 @@
                     <em>Pronunciation: yariotta (Ya-ri-o-tta)</em>
                     <h3>Meaning</h3>
                     <p>A reaction word to something you only believe about 5% that's going to happen, whether good or bad, but someone actually does it. Means 'damn, you (or they) really did it'.</p>
-                    
+
                     <div class="tone-indicator">
                         <h3>Tone</h3>
                         <p>Casual — <span>O</span>——————— Formal</p>
                         <p>Serious  ————— <span>O</span>———— Playful</p>
                     </div>
-                    
+
                     <h3>Example</h3>
                     <p>Imagine you meet with your business partner every week to make the weekly language learning newsletter together. Last week he tells you how he's very excited about his trip to NY and Puerto Rico for the weekend, but assures you that the meeting is still on. When the meeting day comes, he completely forgets and doesn't answer any of your calls. Leaving you alone at the keyboard, you mumble "Dang, he yariotta!"</p>
-                    
+
                     <img src="https://share1.cloudhq-mkt3.net/5a3b2b08aaa9ba.jpeg" alt="Family saying itadakimasu before meal" class="modal-image">
-                    
+
                     <a href="https://drive.google.com/file/d/1IMu3x4R6OpdWZGBui5snO1K80yYSugNJ/view?usp=drive_link" class="listen-btn">
                         ▶ LISTEN TO PRONUNCIATION
                     </a>
@@ -1082,7 +1194,7 @@
                 e.preventDefault();
                 const newsletterId = this.getAttribute('data-id');
                 const newsletter = newsletters[newsletterId];
-                
+
                 if (newsletter) {
                     modalContent.innerHTML = `
                         <h2>${newsletter.title}</h2>
@@ -1092,7 +1204,7 @@
                     modal.style.display = 'flex';
                     document.documentElement.classList.add('modal-open');
                     document.body.classList.add('modal-open');
-                    
+
                     modal.setAttribute('aria-hidden', 'false');
                     closeBtn.focus();
                 }
@@ -1104,15 +1216,15 @@
             document.documentElement.classList.remove('modal-open');
             document.body.classList.remove('modal-open');
             modal.setAttribute('aria-hidden', 'true');
-            
+
             const focusedButtonBeforeModal = document.activeElement;
             if (focusedButtonBeforeModal) {
                 focusedButtonBeforeModal.focus();
             }
         }
-        
+
         closeBtn.addEventListener('click', closeModal);
-        
+
         modal.addEventListener('click', function(e) {
             if (e.target === modal) {
                 closeModal();
