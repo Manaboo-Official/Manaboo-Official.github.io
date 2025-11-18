@@ -1,0 +1,1695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manaboo Japanese Quiz</title>
+  <style>
+    body {
+      margin: 0 !important;
+      padding: 0 !important;
+      -webkit-text-size-adjust: 100% !important;
+      -ms-text-size-adjust: 100% !important;
+      background-color: #f4f0e8 !important;
+      font-family: Arial, sans-serif;
+    }
+    table {
+      border-spacing: 0 !important;
+      border-collapse: collapse !important;
+      table-layout: fixed !important;
+      margin: 0 auto !important;
+    }
+    .content-block {
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      margin-bottom: 20px;
+      border: 1px solid #e9cba7;
+      width: 100%;
+    }
+
+    /* Answer buttons */
+    .answer-option {
+      display: block;
+      padding: 15px;
+      background-color: #fff;
+      border: 2px solid #e9cba7;
+      border-radius: 8px;
+      color: #3e3e3e;
+      text-decoration: none;
+      text-align: left;
+      font-size: 15px;
+      line-height: 1.5;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .answer-option:hover {
+      background-color: #fff9f4;
+      border-color: #de7d7a;
+    }
+
+    /* Selected states */
+    .answer-option.correct-selected {
+      background-color: #4caf50 !important;
+      color: #ffffff !important;
+      border-color: #4caf50 !important;
+    }
+    .answer-option.wrong-selected {
+      background-color: #f44336 !important;
+      color: #ffffff !important;
+      border-color: #f44336 !important;
+    }
+
+    /* One question at a time */
+    .question {
+      display: none;
+    }
+    .question.active-question {
+      display: table;
+    }
+
+    /* Explanation blocks */
+    .explanation {
+      display: none;
+      background-color: #fff9f4;
+      padding: 12px 14px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border-left: 4px solid #de7d7a;
+    }
+    .explanation p {
+      margin: 0 0 4px 0;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #3e3e3e;
+    }
+
+    /* Progress */
+    #progress-block {
+      text-align: left;
+    }
+    #progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+    #progress-text {
+      color: #3e3e3e;
+      font-weight: bold;
+    }
+    #progress-score {
+      color: #777777;
+      font-size: 12px;
+    }
+    .progress-bar-outer {
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      background-color: #f4dfd4;
+      overflow: hidden;
+    }
+    .progress-bar-inner {
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: linear-gradient(135deg, #de7d7a, #f3aaa9);
+      transition: width 0.3s ease;
+    }
+
+    /* Results */
+    #results-block {
+      text-align: center;
+    }
+    #result-summary {
+      font-size: 16px;
+      font-weight: bold;
+      color: #3e3e3e;
+      margin: 0 0 8px;
+      line-height: 1.5;
+    }
+    #result-detail {
+      font-size: 14px;
+      color: #666666;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* Review section cards */
+    #review-container {
+      margin-top: 16px;
+      text-align: left;
+    }
+    .review-card {
+      margin: 0 0 14px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background-color: #fff9f4;
+      border-left: 4px solid #e9cba7;
+    }
+    .review-title {
+      margin: 0 0 4px;
+      font-weight: bold;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .review-badge {
+      margin: 0 0 6px;
+      font-size: 12px;
+      font-weight: bold;
+      line-height: 1.5;
+    }
+
+    /* Navigation buttons */
+    #nav-block {
+      text-align: center;
+    }
+    .nav-button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 0 6px;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(135deg, #de7d7a, #f3aaa9);
+      color: #ffffff;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, opacity 0.2s ease;
+    }
+    .nav-button:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12);
+    }
+    .nav-button:disabled {
+      opacity: 0.45;
+      cursor: default;
+      box-shadow: none;
+    }
+
+    /* Confetti / sad face overlay */
+    #feedback-overlay {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.9);
+      z-index: 9999;
+      font-size: 100px; /* big & noticeable */
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    #feedback-overlay.feedback-show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  </style>
+</head>
+<body>
+  <!-- Confetti / Sad face overlay -->
+  <div id="feedback-overlay"></div>
+
+  <table
+    style="width: 100%; max-width: 600px"
+    role="presentation"
+    cellspacing="0"
+    cellpadding="0"
+    align="center"
+  >
+    <tbody>
+      <tr>
+        <td style="padding: 20px" align="center" valign="top">
+          <!-- Header -->
+          <table
+            role="presentation"
+            width="100%"
+            cellspacing="0"
+            cellpadding="0"
+            bgcolor="#F4F0E8"
+          >
+            <tbody>
+              <tr>
+                <td style="padding: 20px 20px 10px 20px" align="center">
+                  <img
+                    style="
+                      vertical-align: middle;
+                      display: inline-block;
+                      margin-right: 15px;
+                    "
+                    src="https://share1.cloudhq-mkt3.net/10cacf323842e2.jpeg"
+                    alt="Manaboo Logo"
+                    width="110"
+                    height="72"
+                  />
+                  <h1
+                    style="
+                      margin: 0;
+                      font-size: 24px;
+                      font-weight: bold;
+                      color: #de7d7a;
+                      display: inline-block;
+                      vertical-align: middle;
+                    "
+                  >
+                    MANABOO
+                  </h1>
+                  <p
+                    style="
+                      margin: 5px 0 0;
+                      font-size: 14px;
+                      color: #3e3e3e;
+                      line-height: 1.5;
+                    "
+                  >
+                    Japanese Language Learning
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Quiz Intro -->
+          <table
+            class="content-block"
+            role="presentation"
+            width="100%"
+            cellspacing="0"
+            cellpadding="0"
+          >
+            <tbody>
+              <tr>
+                <td
+                  style="
+                    background: linear-gradient(135deg, #de7d7a, #f3aaa9);
+                    padding: 30px 20px;
+                    text-align: center;
+                    border-radius: 8px 8px 0 0;
+                  "
+                >
+                  <h2
+                    style="
+                      color: white;
+                      margin: 0 0 10px;
+                      font-size: 26px;
+                      line-height: 1.3;
+                    "
+                  >
+                    🎌 Weekly Quiz Challenge!
+                  </h2>
+                  <p
+                    style="
+                      color: white;
+                      margin: 0;
+                      font-size: 16px;
+                      opacity: 0.95;
+                      line-height: 1.5;
+                    "
+                  >
+                    One question at a time — click an answer to see if you're
+                    right!
+                  </p>
+                  <p
+                    style="
+                      color: white;
+                      margin: 10px 0 0;
+                      font-size: 14px;
+                      opacity: 0.85;
+                      line-height: 1.5;
+                    "
+                  >
+                    Your progress and score will update as you go.
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Progress Block -->
+          <table
+            id="progress-block"
+            class="content-block"
+            role="presentation"
+            width="100%"
+            cellspacing="0"
+            cellpadding="0"
+          >
+            <tbody>
+              <tr>
+                <td style="padding: 16px 18px">
+                  <div id="progress-header">
+                    <span id="progress-text">Question 1 of 5</span>
+                    <span id="progress-score">0 correct · 0/5 answered</span>
+                  </div>
+                  <div class="progress-bar-outer">
+                    <div
+                      id="progress-bar-inner"
+                      class="progress-bar-inner"
+                    ></div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- QUESTION 1 -->
+          <table
+            class="content-block question"
+            data-question="1"
+            role="presentation"
+            width="100%"
+            cellspacing="0"
+            cellpadding="0"
+            style="margin-top: 20px"
+          >
+            <tbody>
+              <tr>
+                <td
+                  style="
+                    padding: 20px;
+                    background-color: #fff9f4;
+                    border-radius: 8px 8px 0 0;
+                  "
+                >
+                  <p
+                    style="
+                      margin: 0;
+                      font-size: 14px;
+                      color: #de7d7a;
+                      font-weight: bold;
+                      text-transform: uppercase;
+                      line-height: 1.5;
+                    "
+                  >
+                    Question 1 of 5
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 20px">
+                  <p
+                    style="
+                      font-size: 16px;
+                      font-weight: bold;
+                      color: #3e3e3e;
+                      text-align: center;
+                      margin: 0 0 15px;
+                      line-height: 1.5;
+                    "
+                  >
+                    What does this phrase mean?
+                  </p>
+                  <p
+                    style="
+                      font-size: 32px;
+                      color: #de7d7a;
+                      font-weight: bold;
+                      text-align: center;
+                      margin: 15px 0;
+                      line-height: 1.2;
+                    "
+                  >
+                    マジで
+                  </p>
+                  <p
+                    style="
+                      font-size: 14px;
+                      color: #999;
+                      text-align: center;
+                      margin: 0 0 20px;
+                      font-style: italic;
+                      line-height: 1.5;
+                    "
+                  >
+                    (maji de)
+                  </p>
+
+                  <table
+                    role="presentation"
+                    width="100%"
+                    cellspacing="0"
+                    cellpadding="0"
+                  >
+                    <tr>
+                      <td style="padding: 5px 0">
+                        <a
+                          href="#q1-correct"
+                          id="q1-correct"
+                          class="answer-option"
+                          data-correct="true"
+                        >
+                          <strong style="color: #de7d7a">A)</strong> Seriously?
+                          / No way!
+                        </a>
+                        <div class="explanation">
+                          <p>
+                            <strong style="color: #4caf50">✓ Correct!</strong>
+                            <br />
+                            マジで (maji de) is a casual expression meaning
+                            "Seriously?" or "No way!" – used to express surprise
+                            or disbelief.
+                          </p>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 0">
+                        <a
+                          href="#q1-wrong1"
+                          id="q1-wrong1"
+                          class="answer-option"
+                        >
+                          <strong style="color: #de7d7a">B)</strong> Thank you
+                          very much
+                        </a>
+                        <div class="explanation">
+                          <p>
+                            <strong style="color: #f44336">✗ Not quite.</strong>
+                            <br />
+                            マジで (maji de) means "Seriously?" or "No way!" – not
+                            "thank you very much".
+                          </p>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 0">
+                        <a
+                          href="#q1-wrong2"
+                          id="q1-wrong2"
+                          class="answer-option"
+                        >
+                          <strong style="color: #de7d7a">C)</strong> Good
+                          morning
+                        </a>
+                        <div class="explanation">
+                          <p>
+                            <strong style="color: #f44336">✗ Not quite.</strong>
+                            <br />
+                            "Good morning" would be おはよう (ohayou) or おはよう
+                            ございます (ohayou gozaimasu), not マジで.
+                          </p>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 0">
+                        <a
+                          href="#q1-wrong3"
+                          id="q1-wrong3"
+                          class="answer-option"
+                        >
+                          <strong style="color: #de7d7a">D)</strong> See you
+                          later
+                        </a>
+                        <div class="explanation">
+                          <p>
+                            <strong style="color: #f44336">✗ Not quite.</strong>
+                            <br />
+                            "See you later" would be またね (mata ne) or じゃあね
+                            (jaa ne). マジで is all about surprise.
+                          </p>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- QUESTION 2 -->
+          <table
+            class="content-block question"
+            data-question="2"
+            role="presentation"
+            width="100%"
+            cellspacing="0"
+            cellpadding="0"
+            style="margin-top: 20px"
+          >
+            <tbody>
+              <tr>
+                <td
+                  style="
+                    padding: 20px;
+                    background-color: #fff9f4;
+                    border-radius: 8px 8px 0 0;
+                  "
+                >
+                  <p
+                    style="
+                      margin: 0;
+                      font-size: 14px;
+                      color: #de7d7a;
+                      font-weight: bold;
+                      text-transform: uppercase;
+                      line-height: 1.5;
+                    "
+                  >
+                    Question 2 of 5
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 20px">
+                  <p
+                    style="
+                      font-size: 16px;
+                      font-weight: bold;
+                      color: #3e3e3e;
+                      text-align: center;
+                      margin: 0 0 20px;
+                      line-height: 1.5;
+                    "
+                  >
+                    True or False?
+                  </p>
+                  <table
+                    role="presentation"
+                    width="100%"
+                    cellspacing="0"
+                    cellpadding="0"
+                  >
+                    <tr>
+                      <td
+                        style="
+                          background-color: #fff9f4;
+                          padding: 20px;
+                          border-radius: 8px;
+                          text-align: center;
+                        "
+                      >
+                        <p
+                          style="
+                            font-size: 18px;
+                            color: #3e3e3e;
+                            margin: 0;
+                            line-height: 1.6;
+                          "
+                        >
+                          "すまん" is a more polite way to say sorry than
+                          "すみません"
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <table
+                    role="presentation"
+                    width="100%"
+                    cellspacing="0"
+                    cellpadding="0"
+                    style="margin-top: 20px"
+                  >
+                    <tr>
+                      <td width="48%" style="padding-right: 2%">
+                        <a
+                          href="#q2-wrong"
+                          id="q2-wrong"
+                          class="answer-option"
+                          style="
+                            display: block;
+                            padding: 18px 10px;
+                            background: linear-gradient(
+                              135deg,
+                              #4caf50,
+                              #45a049
+                            );
+                            color: white !important;
+                            border-radius: 8px;
+                            text-align: center;
+                            font-size: 18px;
+                            font-weight: bold;
+                            border: none;
+                          "
+                        >
+                          ✓ TRUE
+                        </a>
+                        <div class="explanation">
+                          <p>
+                            <strong style="color: #f44336">✗ Not quite.</strong>
+                            <br />
+                            すまん (suman) is actually less polite than すみません
+                            (sumimasen). It's a casual, almost rough "my bad".
+                          </p>
+                        </div>
+                      </td>
+                      <td width="48%" style="padding-left: 2%">
+                        <a
+                          href="#q2-correct"
+                          id="q2-correct"
+                          class="answer-option"
+                          data-correct="true"
+                          style="
+                            display: block;
+                            padding: 18px 10px;
+                            background: linear-gradient(
+                              135deg,
+                              #f44336,
+                              #da190b
+                            );
+                            color: white !important;
+                            border-radius: 8px;
+                            text-align: center;
+                            font-size: 18px;
+                            font-weight: bold;
+                            border: none;
+                          "
+                        >
+                          ✗ FALSE
+                        </a>
+                        <div class="explanation">
+                          <p>
+                            <strong style="color: #4caf50"
+                              >✓ Correct! It's FALSE.</strong
+                            >
+                            <br />
+                            すみません (sumimasen) is more polite. すまん (suman)
+                            feels more like "my bad" between close friends or in
+                            casual situations.
+                          </p>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- QUESTION 3 -->
+          <table
+            class="content-block question"
+            data-question="3"
+            role="presentation"
+            width="100%"
+            cellspacing="0"
+            cellpadding="0"
+            style="margin-top: 20px"
+          >
+            <tbody>
+              <tr>
+                <td
+                  style="
+                    padding: 20px;
+                    background-color: #fff9f4;
+                    border-radius: 8px 8px 0 0;
+                  "
+                >
+                  <p
+                    style="
+                      margin: 0;
+                      font-size: 14px;
+                      color: #de7d7a;
+                      font-weight: bold;
+                      text-transform: uppercase;
+                      line-height: 1.5;
+                    "
+                  >
+                    Question 3 of 5 • Scenario
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 20px">
+                  <table
+                    role="presentation"
+                    width="100%"
+                    cellspacing="0"
+                    cellpadding="0"
+                  >
+                    <tr>
+                      <td
+                        style="
+                          background-color: #fff9f4;
+                          padding: 20px;
+                          border-radius: 8px;
+                          border-left: 4px solid #de7d7a;
+                        "
+                      >
+                        <p
+                          style="
+                            font-size: 15px;
+                            color: #3e3e3e;
+                            margin: 0;
+                            line-height: 1.7;
+                          "
+                        >
+                          🍽️ <strong>Situation:</strong><br />
+                          You're at a restaurant and your order just arrived.
+                          What do you say before eating?
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <table
+                    role="presentation"
+                    width="100%"
+                    cellspacing="0"
+                    cellpadding="0"
+                    style="margin-top: 20px"
+                  >
+                    <tr>
+                      <td style="padding: 5px 0">
+                        <a
+                          href="#q3-correct"
+                          id="q3-correct"
+                          class="answer-option"
+                          data-correct="true"
+                          style="text-align: center; font-size: 16px"
+                        >
+                          いただきます (itadakimasu)
+                        </a>
+                        <div class="explanation">
+                          <p>
+                            <strong style="color: #4caf50">✓ Correct!</strong>
+                            <br />
+                            いただきます (itadakimasu) means "I humbly receive"
+                            and is said <strong>before</strong> eating.
+                            ごちそうさま (gochisousama) is said
+                            <strong>after</strong> you finish your meal.
+                          </p>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 0">
+                        <a
+                          href="#q3-wrong1"
+                          id="q3-wrong1"
+                          class="answer-option"
+                          style="text-align: center; font-size: 16px"
+                        >
+                          ごちそうさま (gochisousama)
+                        </a>
+                        <div class="explanation">
+                          <p>
+                            <strong style="color: #f44336">✗ Not quite.</strong>
+                            <br />
+                            ごちそうさま is a phrase of gratitude said
+                            <strong>after</strong> eating, not before.
+                          </p>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 0">
+                        <a
+                          href="#q3-wrong2"
+                          id="q3-wrong2"
+                          class="answer-option"
+                          style="text-align: center; font-size: 16px"
+                        >
+                          おやすみ (oyasumi)
+                        </a>
+                        <div class="explanation">
+                          <p>
+                            <strong style="color: #f44336">✗ Not quite.</strong>
+                            <br />
+                            おやすみ (oyasumi) means "good night" – used when
+                            going to sleep, not at the dinner table.
+                          </p>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- QUESTION 4 -->
+          <table
+            class="content-block question"
+            data-question="4"
+            role="presentation"
+            width="100%"
+            cellspacing="0"
+            cellpadding="0"
+            style="margin-top: 20px"
+          >
+            <tbody>
+              <tr>
+                <td
+                  style="
+                    padding: 20px;
+                    background-color: #fff9f4;
+                    border-radius: 8px 8px 0 0;
+                  "
+                >
+                  <p
+                    style="
+                      margin: 0;
+                      font-size: 14px;
+                      color: #de7d7a;
+                      font-weight: bold;
+                      text-transform: uppercase;
+                      line-height: 1.5;
+                    "
+                  >
+                    Question 4 of 5
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 20px">
+                  <p
+                    style="
+                      font-size: 16px;
+                      font-weight: bold;
+                      color: #3e3e3e;
+                      text-align: center;
+                      margin: 0 0 15px;
+                      line-height: 1.5;
+                    "
+                  >
+                    What does やりおった mean?
+                  </p>
+                  <p
+                    style="
+                      font-size: 28px;
+                      color: #de7d7a;
+                      font-weight: bold;
+                      text-align: center;
+                      margin: 15px 0 25px;
+                      line-height: 1.2;
+                    "
+                  >
+                    やりおった
+                  </p>
+
+                  <table
+                    role="presentation"
+                    width="100%"
+                    cellspacing="0"
+                    cellpadding="0"
+                  >
+                    <tr>
+                      <td
+                        width="48%"
+                        style="padding: 5px 2% 5px 0; vertical-align: top"
+                      >
+                        <a
+                          href="#q4-correct"
+                          id="q4-correct"
+                          class="answer-option"
+                          data-correct="true"
+                          style="
+                            display: block;
+                            padding: 20px 15px;
+                            background-color: #fff9f4;
+                            border: 2px solid #e9cba7;
+                            border-radius: 12px;
+                            text-align: center;
+                            text-decoration: none;
+                            color: #3e3e3e;
+                          "
+                        >
+                          <span
+                            style="
+                              display: block;
+                              font-size: 22px;
+                              font-weight: bold;
+                              color: #de7d7a;
+                              margin-bottom: 5px;
+                            "
+                            >A</span
+                          >
+                          <span style="display: block; font-size: 14px"
+                            >Damn, you really did it</span
+                          >
+                        </a>
+                        <div class="explanation">
+                          <p>
+                            <strong style="color: #4caf50">✓ Correct!</strong>
+                            <br />
+                            やりおった (yariotta) is like, "Wow, you actually did
+                            it" – often used when something felt like a long
+                            shot but someone pulled it off.
+                          </p>
+                        </div>
+                      </td>
+                      <td
+                        width="48%"
+                        style="padding: 5px 0 5px 2%; vertical-align: top"
+                      >
+                        <a
+                          href="#q4-wrong1"
+                          id="q4-wrong1"
+                          class="answer-option"
+                          style="
+                            display: block;
+                            padding: 20px 15px;
+                            background-color: #fff9f4;
+                            border: 2px solid #e9cba7;
+                            border-radius: 12px;
+                            text-align: center;
+                            text-decoration: none;
+                            color: #3e3e3e;
+                          "
+                        >
+                          <span
+                            style="
+                              display: block;
+                              font-size: 22px;
+                              font-weight: bold;
+                              color: #de7d7a;
+                              margin-bottom: 5px;
+                            "
+                            >B</span
+                          >
+                          <span style="display: block; font-size: 14px"
+                            >Good night</span
+                          >
+                        </a>
+                        <div class="explanation">
+                          <p>
+                            <strong style="color: #f44336">✗ Not quite.</strong>
+                            <br />
+                            "Good night" would be おやすみ (oyasumi). やりおった
+                            reacts to something that actually happened.
+                          </p>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="2" style="height: 10px"></td>
+                    </tr>
+                    <tr>
+                      <td
+                        width="48%"
+                        style="padding: 5px 2% 5px 0; vertical-align: top"
+                      >
+                        <a
+                          href="#q4-wrong2"
+                          id="q4-wrong2"
+                          class="answer-option"
+                          style="
+                            display: block;
+                            padding: 20px 15px;
+                            background-color: #fff9f4;
+                            border: 2px solid #e9cba7;
+                            border-radius: 12px;
+                            text-align: center;
+                            text-decoration: none;
+                            color: #3e3e3e;
+                          "
+                        >
+                          <span
+                            style="
+                              display: block;
+                              font-size: 22px;
+                              font-weight: bold;
+                              color: #de7d7a;
+                              margin-bottom: 5px;
+                            "
+                            >C</span
+                          >
+                          <span style="display: block; font-size: 14px"
+                            >Nice to meet you</span
+                          >
+                        </a>
+                        <div class="explanation">
+                          <p>
+                            <strong style="color: #f44336">✗ Not quite.</strong>
+                            <br />
+                            "Nice to meet you" would be はじめまして (hajimemashite),
+                            not やりおった.
+                          </p>
+                        </div>
+                      </td>
+                      <td
+                        width="48%"
+                        style="padding: 5px 0 5px 2%; vertical-align: top"
+                      >
+                        <a
+                          href="#q4-wrong3"
+                          id="q4-wrong3"
+                          class="answer-option"
+                          style="
+                            display: block;
+                            padding: 20px 15px;
+                            background-color: #fff9f4;
+                            border: 2px solid #e9cba7;
+                            border-radius: 12px;
+                            text-align: center;
+                            text-decoration: none;
+                            color: #3e3e3e;
+                          "
+                        >
+                          <span
+                            style="
+                              display: block;
+                              font-size: 22px;
+                              font-weight: bold;
+                              color: #de7d7a;
+                              margin-bottom: 5px;
+                            "
+                            >D</span
+                          >
+                          <span style="display: block; font-size: 14px"
+                            >I'm hungry</span
+                          >
+                        </a>
+                        <div class="explanation">
+                          <p>
+                            <strong style="color: #f44336">✗ Not quite.</strong>
+                            <br />
+                            やりおった is a reaction, not a hunger phrase.
+                          </p>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- QUESTION 5 -->
+          <table
+            class="content-block question"
+            data-question="5"
+            role="presentation"
+            width="100%"
+            cellspacing="0"
+            cellpadding="0"
+            style="margin-top: 20px"
+          >
+            <tbody>
+              <tr>
+                <td
+                  style="
+                    padding: 20px;
+                    background-color: #fff9f4;
+                    border-radius: 8px 8px 0 0;
+                  "
+                >
+                  <p
+                    style="
+                      margin: 0;
+                      font-size: 14px;
+                      color: #de7d7a;
+                      font-weight: bold;
+                      text-transform: uppercase;
+                      line-height: 1.5;
+                    "
+                  >
+                    Question 5 of 5 • Fill in the Blank
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 20px">
+                  <p
+                    style="
+                      font-size: 16px;
+                      font-weight: bold;
+                      color: #3e3e3e;
+                      text-align: center;
+                      margin: 0 0 20px;
+                      line-height: 1.5;
+                    "
+                  >
+                    Complete the sentence:
+                  </p>
+                  <table
+                    role="presentation"
+                    width="100%"
+                    cellspacing="0"
+                    cellpadding="0"
+                  >
+                    <tr>
+                      <td
+                        style="
+                          background-color: #fff9f4;
+                          padding: 20px;
+                          border-radius: 8px;
+                          text-align: center;
+                        "
+                      >
+                        <p
+                          style="
+                            font-size: 17px;
+                            color: #3e3e3e;
+                            margin: 0;
+                            line-height: 1.8;
+                          "
+                        >
+                          When someone impresses you so much, you say:<br />
+                          <span
+                            style="
+                              display: inline-block;
+                              min-width: 150px;
+                              border-bottom: 3px solid #de7d7a;
+                              margin: 10px 5px;
+                              font-weight: bold;
+                              color: #de7d7a;
+                              font-size: 20px;
+                            "
+                            >_______</span
+                          >
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <table
+                    role="presentation"
+                    width="100%"
+                    cellspacing="0"
+                    cellpadding="0"
+                    style="margin-top: 20px"
+                  >
+                    <tr>
+                      <td style="text-align: center; padding: 10px 0">
+                        <a
+                          href="#q5-correct"
+                          id="q5-correct"
+                          class="answer-option"
+                          data-correct="true"
+                          style="
+                            display: inline-block;
+                            padding: 12px 25px;
+                            margin: 5px;
+                            background-color: white;
+                            border: 2px solid #de7d7a;
+                            border-radius: 25px;
+                            color: #3e3e3e;
+                            text-decoration: none;
+                            font-weight: bold;
+                            font-size: 15px;
+                          "
+                        >
+                          あなた、すごすぎる
+                        </a>
+                        <div class="explanation">
+                          <p>
+                            <strong style="color: #4caf50">✓ Correct!</strong>
+                            <br />
+                            あなた、すごすぎる (anata, sugosugiru) means "you're
+                            soooo good" – perfect when you're genuinely blown
+                            away.
+                          </p>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="text-align: center; padding: 10px 0">
+                        <a
+                          href="#q5-wrong1"
+                          id="q5-wrong1"
+                          class="answer-option"
+                          style="
+                            display: inline-block;
+                            padding: 12px 25px;
+                            margin: 5px;
+                            background-color: white;
+                            border: 2px solid #de7d7a;
+                            border-radius: 25px;
+                            color: #3e3e3e;
+                            text-decoration: none;
+                            font-weight: bold;
+                            font-size: 15px;
+                          "
+                        >
+                          なんでやねん
+                        </a>
+                        <div class="explanation">
+                          <p>
+                            <strong style="color: #f44336">✗ Not quite.</strong>
+                            <br />
+                            なんでやねん (nandeya nen) is more like "What the heck?!" –
+                            used when you're confused or surprised in a
+                            comedic way.
+                          </p>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="text-align: center; padding: 10px 0">
+                        <a
+                          href="#q5-wrong2"
+                          id="q5-wrong2"
+                          class="answer-option"
+                          style="
+                            display: inline-block;
+                            padding: 12px 25px;
+                            margin: 5px;
+                            background-color: white;
+                            border: 2px solid #de7d7a;
+                            border-radius: 25px;
+                            color: #3e3e3e;
+                            text-decoration: none;
+                            font-weight: bold;
+                            font-size: 15px;
+                          "
+                        >
+                          おかげさまで
+                        </a>
+                        <div class="explanation">
+                          <p>
+                            <strong style="color: #f44336">✗ Not quite.</strong>
+                            <br />
+                            おかげさまで (okagesama de) means "thanks to you" – used
+                            when you're humbly acknowledging someone's help, not
+                            pure admiration.
+                          </p>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Navigation Block -->
+          <table
+            id="nav-block"
+            class="content-block"
+            role="presentation"
+            width="100%"
+            cellspacing="0"
+            cellpadding="0"
+            style="margin-top: 10px"
+          >
+            <tbody>
+              <tr>
+                <td style="padding: 16px; text-align: center">
+                  <button
+                    id="prev-btn"
+                    class="nav-button"
+                    type="button"
+                    disabled
+                  >
+                    ◀ Previous
+                  </button>
+                  <button
+                    id="next-btn"
+                    class="nav-button"
+                    type="button"
+                    disabled
+                  >
+                    Next Question ▶
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Results Block -->
+          <table
+            id="results-block"
+            class="content-block"
+            role="presentation"
+            width="100%"
+            cellspacing="0"
+            cellpadding="0"
+            style="margin-top: 20px"
+          >
+            <tbody>
+              <tr>
+                <td style="padding: 20px">
+                  <h3
+                    style="
+                      margin: 0 0 10px;
+                      font-size: 18px;
+                      color: #de7d7a;
+                      line-height: 1.4;
+                    "
+                  >
+                    Your Quiz Results
+                  </h3>
+                  <p id="result-summary">
+                    Answer the questions to see your score.
+                  </p>
+                  <p id="result-detail">
+                    As you answer, your progress and score will update here.
+                  </p>
+
+                  <div id="review-container"></div>
+
+                  <div style="text-align: center; margin-top: 12px">
+                    <button
+                      id="restart-btn"
+                      class="nav-button"
+                      type="button"
+                      style="display: none"
+                    >
+                      🔁 Restart Quiz
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- CTA -->
+          <table
+            role="presentation"
+            width="100%"
+            cellspacing="0"
+            cellpadding="0"
+            style="margin-top: 20px"
+          >
+            <tbody>
+              <tr>
+                <td style="padding: 20px; text-align: center">
+                  <p
+                    style="
+                      font-size: 15px;
+                      color: #3e3e3e;
+                      margin: 0 0 15px;
+                      line-height: 1.5;
+                    "
+                  >
+                    📚 Want to review all these phrases?
+                  </p>
+                  <a
+                    href="https://manaboo-official.github.io"
+                    style="
+                      display: inline-block;
+                      padding: 12px 30px;
+                      background: linear-gradient(135deg, #de7d7a, #f3aaa9);
+                      color: white !important;
+                      border-radius: 25px;
+                      text-decoration: none;
+                      font-weight: bold;
+                      margin: 5px;
+                    "
+                  >
+                    Visit Manaboo Website
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Footer -->
+          <table
+            role="presentation"
+            width="100%"
+            cellspacing="0"
+            cellpadding="0"
+            bgcolor="#F4F0E8"
+          >
+            <tbody>
+              <tr>
+                <td style="padding: 30px 20px 20px 20px" align="center">
+                  <p
+                    style="
+                      margin: 0;
+                      font-size: 14px;
+                      color: #666666;
+                      line-height: 1.6;
+                    "
+                  >
+                    Manaboo skips the textbook fluff and dives straight into the
+                    Japanese words and phrases you'll actually use every day.
+                  </p>
+                  <p
+                    style="
+                      margin: 10px 0 0;
+                      color: #3e3e3e;
+                      font-size: 12px;
+                      line-height: 1.5;
+                    "
+                  >
+                    © 2025 Manaboo Japanese Language Learning
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const questions = Array.from(document.querySelectorAll('.question'));
+      const totalQuestions = questions.length;
+
+      const resultSummary = document.getElementById('result-summary');
+      const resultDetail = document.getElementById('result-detail');
+      const reviewContainer = document.getElementById('review-container');
+
+      const progressText = document.getElementById('progress-text');
+      const progressScore = document.getElementById('progress-score');
+      const progressBarInner = document.getElementById('progress-bar-inner');
+
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+      const restartBtn = document.getElementById('restart-btn');
+
+      const feedbackOverlay = document.getElementById('feedback-overlay');
+
+      const state = {}; // { "1": "correct" | "wrong" }
+      let currentIndex = 0;
+
+      function showFeedback(type) {
+        if (!feedbackOverlay) return;
+        feedbackOverlay.textContent = type === 'correct' ? '🎉🎉🎉' : '😢';
+        feedbackOverlay.classList.add('feedback-show');
+        setTimeout(() => {
+          feedbackOverlay.classList.remove('feedback-show');
+        }, 900);
+      }
+
+      function buildReview() {
+        if (!reviewContainer) return;
+        reviewContainer.innerHTML = '';
+
+        questions.forEach((q) => {
+          const qNum = q.getAttribute('data-question') || '?';
+          const result = state[qNum]; // "correct" | "wrong"
+          if (!result) return;
+
+          const correctOption = q.querySelector(
+            '.answer-option[data-correct="true"]'
+          );
+          if (!correctOption) return;
+
+          const correctText = correctOption.innerText.trim();
+          const explanation = correctOption.nextElementSibling;
+
+          const card = document.createElement('div');
+          card.className = 'review-card';
+          card.style.borderLeftColor = result === 'correct' ? '#4CAF50' : '#f44336';
+
+          const title = document.createElement('p');
+          title.className = 'review-title';
+          title.style.color = result === 'correct' ? '#2e7d32' : '#c62828';
+          title.textContent = `Question ${qNum}: ${correctText}`;
+          card.appendChild(title);
+
+          const badge = document.createElement('p');
+          badge.className = 'review-badge';
+          badge.style.color = result === 'correct' ? '#2e7d32' : '#c62828';
+          badge.textContent =
+            result === 'correct'
+              ? 'You got this one right 🎉'
+              : 'You chose a different answer — review this one 💡';
+          card.appendChild(badge);
+
+          if (explanation) {
+            const expClone = explanation.cloneNode(true);
+            expClone.style.display = 'block';
+            card.appendChild(expClone);
+          }
+
+          reviewContainer.appendChild(card);
+        });
+      }
+
+      function showQuestion(index) {
+        currentIndex = index;
+
+        questions.forEach((q, i) => {
+          if (i === index) q.classList.add('active-question');
+          else q.classList.remove('active-question');
+        });
+
+        prevBtn.disabled = currentIndex === 0;
+
+        const currentQuestionId = questions[currentIndex].getAttribute(
+          'data-question'
+        );
+        const hasAnswered = !!state[currentQuestionId];
+        nextBtn.disabled = !hasAnswered;
+
+        nextBtn.textContent =
+          currentIndex === totalQuestions - 1
+            ? 'See Results ▶'
+            : 'Next Question ▶';
+
+        refreshUI();
+      }
+
+      function refreshUI() {
+        const answered = Object.keys(state).length;
+        const correct = Object.values(state).filter((v) => v === 'correct').length;
+
+        const percentComplete =
+          totalQuestions === 0
+            ? 0
+            : Math.round((answered / totalQuestions) * 100);
+        progressBarInner.style.width = percentComplete + '%';
+
+        progressText.textContent = `Question ${currentIndex + 1} of ${totalQuestions}`;
+        progressScore.textContent = `${correct} correct · ${answered}/${totalQuestions} answered`;
+
+        if (answered === 0) {
+          resultSummary.textContent = 'Answer the questions to see your score.';
+          resultDetail.textContent =
+            'As you answer, your progress and score will update here.';
+          reviewContainer.innerHTML = '';
+          restartBtn.style.display = 'none';
+        } else if (answered < totalQuestions) {
+          const percentCorrect = Math.round((correct / answered) * 100);
+          resultSummary.textContent = `So far: ${correct} / ${answered} correct (${percentCorrect}%).`;
+          resultDetail.textContent = `${
+            totalQuestions - answered
+          } question(s) left — keep going!`;
+          reviewContainer.innerHTML = '';
+          restartBtn.style.display = 'none';
+        } else {
+          const percentCorrect = Math.round(
+            (correct / totalQuestions) * 100
+          );
+          resultSummary.textContent = `Final score: ${correct} / ${totalQuestions} correct (${percentCorrect}%).`;
+
+          let msg;
+          if (percentCorrect === 100) {
+            msg = 'Perfect! すごすぎる！🔥';
+          } else if (percentCorrect >= 60) {
+            msg = "Nice job! You're picking up real-life Japanese phrases 👏";
+          } else {
+            msg = 'Good start! Review the explanations and try again 💪';
+          }
+          resultDetail.textContent = msg;
+
+          buildReview();
+          restartBtn.style.display = 'inline-block';
+        }
+      }
+
+      // Answer click handlers
+      document.querySelectorAll('.answer-option').forEach((option) => {
+        option.addEventListener('click', function (e) {
+          e.preventDefault();
+
+          const questionEl = option.closest('.question');
+          const questionId = questionEl.getAttribute('data-question');
+
+          if (state[questionId]) return; // already answered → locked
+
+          const isCorrect = option.getAttribute('data-correct') === 'true';
+          state[questionId] = isCorrect ? 'correct' : 'wrong';
+
+          // Clear previous states
+          questionEl.querySelectorAll('.answer-option').forEach((btn) => {
+            btn.classList.remove('correct-selected', 'wrong-selected');
+          });
+          questionEl.querySelectorAll('.explanation').forEach((exp) => {
+            exp.style.display = 'none';
+          });
+
+          // Highlight & show explanation
+          option.classList.add(
+            isCorrect ? 'correct-selected' : 'wrong-selected'
+          );
+          const explanation = option.nextElementSibling;
+          if (explanation && explanation.classList.contains('explanation')) {
+            explanation.style.display = 'block';
+          }
+
+          questionEl.classList.add('answered');
+          showFeedback(isCorrect ? 'correct' : 'wrong');
+
+          const thisIndex = questions.indexOf(questionEl);
+          if (thisIndex === currentIndex) nextBtn.disabled = false;
+
+          refreshUI();
+
+          // Auto-advance after ~2.2s
+          setTimeout(() => {
+            if (thisIndex < totalQuestions - 1) {
+              const nextIndex = thisIndex + 1;
+              showQuestion(nextIndex);
+              questions[nextIndex].scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+              });
+            } else {
+              document
+                .getElementById('results-block')
+                .scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }, 2200);
+        });
+      });
+
+      // Navigation
+      prevBtn.addEventListener('click', () => {
+        if (currentIndex > 0) {
+          showQuestion(currentIndex - 1);
+          questions[currentIndex].scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
+        }
+      });
+
+      nextBtn.addEventListener('click', () => {
+        if (currentIndex < totalQuestions - 1) {
+          showQuestion(currentIndex + 1);
+          questions[currentIndex].scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
+        } else {
+          document
+            .getElementById('results-block')
+            .scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+
+      // Restart Quiz
+      restartBtn.addEventListener('click', () => {
+        Object.keys(state).forEach((k) => delete state[k]);
+
+        questions.forEach((q) => {
+          q.classList.remove('answered', 'active-question');
+          q.querySelectorAll('.answer-option').forEach((btn) => {
+            btn.classList.remove('correct-selected', 'wrong-selected');
+          });
+          q.querySelectorAll('.explanation').forEach((exp) => {
+            exp.style.display = 'none';
+          });
+        });
+
+        reviewContainer.innerHTML = '';
+        resultSummary.textContent = 'Answer the questions to see your score.';
+        resultDetail.textContent =
+          'As you answer, your progress and score will update here.';
+        progressBarInner.style.width = '0%';
+        prevBtn.disabled = true;
+        nextBtn.disabled = true;
+        restartBtn.style.display = 'none';
+
+        showQuestion(0);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      // Init
+      showQuestion(0);
+    });
+  </script>
+</body>
+</html>
